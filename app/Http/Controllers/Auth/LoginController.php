@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/lista-oficios';
 
     /**
      * Create a new controller instance.
@@ -53,7 +53,7 @@ class LoginController extends Controller
         return view('home');
     }
 
-    public function logout(Request $request) {
+    public function logout() {
       return redirect('login')->with(Auth::logout());
     }
 

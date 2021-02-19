@@ -82,4 +82,70 @@ Route::get('/delete-circular/{id_circular}', array(
     'uses' => 'CircularesController@deleteCircular'
 ));
 
+//Rutas del controlador Tarjetas
+Route::get('/lista-tarjetas/{id_tarjeta?}', array(
+    'as' => 'tarjetas',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@index'
+));
 
+Route::get('/tarjetaslista', array(
+    'as' => 'tarjetaslista',
+    'uses' => 'TarjetasController@tarjetaslista'
+));
+
+Route::post('/guardar-tarjeta', array(
+    'as' => 'saveTarjeta',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@saveTarjeta'
+));
+
+Route::post('/update-tarjeta/{id_tarjeta_editar}', array(
+    'as' => 'updateTarjeta',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@updateTarjeta'
+));
+
+Route::get('/delete-tarjeta/{id_tarjeta}', array(
+    'as' => 'deleteTarjeta',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@deleteTarjeta'
+));
+
+//Rutas del controlador Memorándums
+Route::get('/lista-memorandums/{id_memorandum?}', array(
+    'as' => 'memorandums',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@index'
+));
+
+Route::get('/memorandumslista', array(
+    'as' => 'memorandumslista',
+    'uses' => 'MemorandumsController@memorandumslista'
+));
+
+Route::post('/guardar-memorandum', array(
+    'as' => 'saveMemorandum',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@saveMemorandum'
+));
+
+Route::post('/update-memorandum/{id_memorandum_editar}', array(
+    'as' => 'updateMemorandum',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@updateMemorandum'
+));
+
+Route::get('/delete-memorandum/{id_memorandum}', array(
+    'as' => 'deleteMemorandum',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@deleteMemorandum'
+));
+
+
+//Logout
+Route::get('/logout', array(
+    'as' => 'logout',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\Auth\LoginController@logout'
+));
