@@ -52,4 +52,34 @@ Route::get('/delete-oficio/{id_oficio}', array(
     'uses' => 'OficiosController@deleteOficio'
 ));
 
+//Rutas del controlador Circulares
+Route::get('/lista-circulares/{id_circular?}', array(
+	'as' => 'circulares',
+	'middleware' => 'auth',
+	'uses' => 'CircularesController@index'
+));
+
+Route::get('/circulareslista', array(
+    'as' => 'circulareslista',
+    'uses' => 'CircularesController@circulareslista'
+));
+
+Route::post('/guardar-circular', array(
+    'as' => 'saveCircular',
+    'middleware' => 'auth',
+    'uses' => 'CircularesController@saveCircular'
+));
+
+Route::post('/update-circular/{id_circular_editar}', array(
+    'as' => 'updateCircular',
+    'middleware' => 'auth',
+    'uses' => 'CircularesController@updateCircular'
+));
+
+Route::get('/delete-circular/{id_circular}', array(
+    'as' => 'deleteCircular',
+    'middleware' => 'auth',
+    'uses' => 'CircularesController@deleteCircular'
+));
+
 

@@ -6,18 +6,37 @@
       <img src="./img/logo.png" alt="" class="brand-image ew-brand-image">
     </a>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" class="nav-link">Oficios</a>
+      <a href="{{ route('oficios') }}" class="nav-link">Oficios</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Circulares</a>
+      <a href="{{ route('circulares') }}" class="nav-link">Circulares</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Tarjetas</a>
+      <a href="{{ route('tarjetas') }}" class="nav-link">Tarjetas</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Memorándums</a>
+      <a href="{{ route('memorandums') }}" class="nav-link">Memorándums</a>
     </li>
+
+    <li class="nav-item dropdown text-body">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+      <i class="fa fa-user"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <div class="dropdown-item p-3"><i class="fa fa-user mr-2"></i>admin</div>
+      
+      
+      <div class="dropdown-divider"></div>
+      <div class="dropdown-footer p-2 text-right">
+        <a class="btn btn-default" href="logout.php">Logout</a>
+      </div>
+      
+    </div>
+    </li>
+
   </ul>
+
+
 
   <!-- SEARCH FORM -->
   <!--
