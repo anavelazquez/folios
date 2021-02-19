@@ -13,20 +13,51 @@ var id_oficio_editar;
 function validarFormulario(msg){
   if(msg){
     console.log(msg);
-    /*
-    if(msg.responseJSON.errors.expediente){
-        $("#expediente").addClass("is-invalid");
-        $("#invalid-feedback-expediente").html(msg.responseJSON.errors.expediente);
-        $("#invalid-feedback-expediente").fadeIn();
+    if(msg.responseJSON.errors.dirigido){
+        $("#dirigido").addClass("is-invalid");
+        $("#invalid-feedback-dirigido").html(msg.responseJSON.errors.dirigido);
+        $("#invalid-feedback-dirigido").fadeIn();
     }else{
-        $("#expediente").removeClass("is-invalid");
-        $("#invalid-feedback-expediente").fadeOut();
+        $("#dirigido").removeClass("is-invalid");
+        $("#invalid-feedback-dirigido").fadeOut();
+    }
+
+    if(msg.responseJSON.errors.seguimiento){
+        $("#seguimiento").addClass("is-invalid");
+        $("#invalid-feedback-seguimiento").html(msg.responseJSON.errors.seguimiento);
+        $("#invalid-feedback-seguimiento").fadeIn();
+    }else{
+        $("#seguimiento").removeClass("is-invalid");
+        $("#invalid-feedback-seguimiento").fadeOut();
+    }
+
+    if(msg.responseJSON.errors.asunto){
+        $("#asunto").addClass("is-invalid");
+        $("#invalid-feedback-asunto").html(msg.responseJSON.errors.asunto);
+        $("#invalid-feedback-asunto").fadeIn();
+    }else{
+        $("#asunto").removeClass("is-invalid");
+        $("#invalid-feedback-asunto").fadeOut();
+    }
+
+    if(msg.responseJSON.errors.observaciones){
+        $("#observaciones").addClass("is-invalid");
+        $("#invalid-feedback-observaciones").html(msg.responseJSON.errors.observaciones);
+        $("#invalid-feedback-observaciones").fadeIn();
+    }else{
+        $("#observaciones").removeClass("is-invalid");
+        $("#invalid-feedback-observaciones").fadeOut();
     }
   }else{
     //console.log('no hay errores');
-    $("#expediente").removeClass("is-invalid");
-    $("#invalid-feedback-expediente").fadeOut();
-    */
+    $("#dirigido").removeClass("is-invalid");
+    $("#invalid-feedback-dirigido").fadeOut();
+    $("#seguimiento").removeClass("is-invalid");
+    $("#invalid-feedback-seguimiento").fadeOut();
+    $("#asunto").removeClass("is-invalid");
+    $("#invalid-feedback-asunto").fadeOut();
+    $("#observaciones").removeClass("is-invalid");
+    $("#invalid-feedback-observaciones").fadeOut();
   }
 }
 
@@ -61,7 +92,7 @@ $(document).ready(function () {
           date = fecha_date.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
           fecha_time = fecha_div[1];
           time = fecha_time.replace(/^(\d{2}):(\d{2}):(\d{2})$/g,'$1:$2');
-          
+
           return date +" "+ time;
         }
       },
