@@ -7,4 +7,6 @@ class Oficio extends Model
 {
     protected $table = 'oficios';
     protected $primaryKey = 'id';
+
+    public $timestamps = false;
 }

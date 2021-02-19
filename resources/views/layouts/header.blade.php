@@ -6,10 +6,16 @@
       <img src="./img/logo.png" alt="" class="brand-image ew-brand-image">
     </a>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" class="nav-link">Home</a>
+      <a href="index3.html" class="nav-link">Oficios</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="#" class="nav-link">Contact</a>
+      <a href="#" class="nav-link">Circulares</a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="#" class="nav-link">Tarjetas</a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="#" class="nav-link">Memorándums</a>
     </li>
   </ul>
 

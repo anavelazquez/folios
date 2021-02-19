@@ -5,5 +5,5 @@
 		
 	</div>
 	<!-- Default to the left -->
-	<strong>Subdirección de Tecnologías de la Información</strong>
+	<strong>CECyTEV - 2019</strong>
 </footer>

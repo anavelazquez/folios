@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'password',
     ];
 
     /**
@@ -40,4 +40,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function area(){
+        return $this->belongsTo('App\AreaAcademica', 'area_id', 'id_area');
+    }
 }

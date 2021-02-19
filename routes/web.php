@@ -21,11 +21,6 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/home', array(
-	'as' => 'home',
-	'middleware' => 'auth',
-	'uses' => 'HomeController@index'
-));
 
 //Rutas del controlador Oficios
 Route::get('/lista-oficios/{id_oficio?}', array(
@@ -33,4 +28,28 @@ Route::get('/lista-oficios/{id_oficio?}', array(
 	'middleware' => 'auth',
 	'uses' => 'OficiosController@index'
 ));
+
+Route::get('/oficioslista', array(
+    'as' => 'oficioslista',
+    'uses' => 'OficiosController@oficioslista'
+));
+
+Route::post('/guardar-oficio', array(
+    'as' => 'saveOficio',
+    'middleware' => 'auth',
+    'uses' => 'OficiosController@saveOficio'
+));
+
+Route::post('/update-oficio/{id_oficio_editar}', array(
+    'as' => 'updateOficio',
+    'middleware' => 'auth',
+    'uses' => 'OficiosController@updateOficio'
+));
+
+Route::get('/delete-oficio/{id_oficio}', array(
+    'as' => 'oficioDelete',
+    'middleware' => 'auth',
+    'uses' => 'OficiosController@deleteOficio'
+));
+
 
