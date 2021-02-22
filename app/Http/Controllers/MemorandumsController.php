@@ -24,7 +24,11 @@ class MemorandumsController extends Controller
         $user = \Auth::user();
         $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
-        return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+        if($user->permissions == 0){
+            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+        }else{
+            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+        }
     }
 
     public function saveMemorandum(Request $request){
