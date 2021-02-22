@@ -25,7 +25,7 @@ Route::get('/', function () {
 //Rutas del controlador Oficios
 Route::get('/lista-oficios/{id_oficio?}', array(
 	'as' => 'oficios',
-	'middleware' => 'auth',
+
 	'uses' => 'OficiosController@index'
 ));
 
