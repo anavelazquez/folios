@@ -25,9 +25,9 @@ class CircularesController extends Controller
         $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->where('autor', $user->Usuario)->get())->make(true);
         }else{
-            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->get())->make(true);
         }
     }
 
@@ -57,14 +57,14 @@ class CircularesController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_circular;
+        $clave= $area->cla.'/CECyTEV/'.$num.'/'.$anio_circular;
 
 
         $circular = new Circular();
         $circular->fecha = date("Y-m-d H:i:s");
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $circular->autor = $user->username;
+        $circular->autor = $user->Usuario;
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));

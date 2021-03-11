@@ -9,7 +9,7 @@
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
-      <th class="centrar">Cancelado</th>
+      <th class="centrar">Estado</th>
       <th class="centrar">
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
@@ -17,7 +17,7 @@
       </th>
     </tr>
   </thead>
-  <tfoot>
+  <!-- <tfoot>
     <tr>
       <th class="centrar">Fecha</th>
       <th class="centrar">Dirigido</th>
@@ -29,7 +29,7 @@
       <th class="centrar">Cancelado</th>
       <th></th>
     </tr>
-  </tfoot>
+  </tfoot> -->
 </table>
 
 <!-- Modal Confirmación Eliminar -->
@@ -101,28 +101,37 @@
                     <div class="invalid-feedback" id="invalid-feedback-observaciones" style="display: none"></div>
                   </div>
                 </div>
-
                 <div class="col-md-12">
-                  <label>Cancelado</label>
+                  <label>Estado</label>
                   <div class="row">
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoNo" value="No" checked>
+                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoNo" value="Verde" checked>
                         <label class="form-check-label" for="canceladoNo">
-                          No
+                          Verde 
                         </label>
                       </div>
                     </div>
 
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoSi" value="Si">
+                        <input class="form-check-input" type="radio" name="cancelado" background-color="yellow" id="canceladoSi" value="Amarillo">
                         <label class="form-check-label" for="canceladoSi">
-                          Si
+                          Amarillo
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoSi" value="Rojo">
+                        <label class="form-check-label" for="canceladoSi">
+                          Rojo
                         </label>
                       </div>
                     </div>
                   </div>
+                  
                   <div class="row">
                     <div class="col-md-12">
                       <div class="invalid-feedback" id="invalid-feedback-cancelado" style="display: none"></div>

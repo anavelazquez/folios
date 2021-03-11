@@ -25,9 +25,9 @@ class OficiosController extends Controller
         $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->where('autor', $user->Usuario)->get())->make(true);
         }else{
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->get())->make(true);
         }
     }
 
@@ -46,7 +46,7 @@ class OficiosController extends Controller
         $anio_oficio =  date("Y");
 
         
-        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $area->nombreArea.'%')->first();
+        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $area->cla.'%')->first();
 
         if($maximo_oficio){
             $num = explode("/", $maximo_oficio['clave']);
@@ -57,14 +57,14 @@ class OficiosController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_oficio;
+        $clave= $area->cla.'/CECyTEV/'.$num.'/'.$anio_oficio;
 
 
         $oficio = new Oficio();
         $oficio->fecha = date("Y-m-d H:i:s");
         $oficio->dirigido = mb_strtoupper($request->input('dirigido'));;
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $oficio->autor = $user->username;
+        $oficio->autor = $user->Usuario;
         $oficio->direcciones = 0;
         $oficio->clave = $clave;
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
