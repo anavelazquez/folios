@@ -73,7 +73,12 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="no-mr-btm" for="dirigido">Dirigido</label>
-                    <input type="text" name="dirigido" class="form-control mayusculas" id="dirigido">
+                    <select class="form-control" id="dirigido" name="dirigido">
+                      <option value="">Seleccione</option>
+                      @foreach($jefes as $jefe)
+                        <option value="{{$jefe->id_trabajador}}">{{ $jefe->nombre_trabajador }}</option>
+                      @endforeach
+                    </select>
                     <div class="invalid-feedback" id="invalid-feedback-dirigido" style="display: none"></div>
                   </div>
                 </div>

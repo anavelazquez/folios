@@ -41,7 +41,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function area(){
-        return $this->belongsTo('App\AreaAcademica', 'area_id', 'id_area');
+    public function trabajador(){
+        return $this->belongsTo('App\Trabajador', 'trabajador_id', 'id_trabajador');
     }
 }

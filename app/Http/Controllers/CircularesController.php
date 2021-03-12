@@ -12,22 +12,28 @@ use Yajra\DataTables\DataTables;
 use App\User;
 use App\Circular;
 use App\AreaAcademica;
+use App\Trabajador;
 
 class CircularesController extends Controller
 {
 
     public function index(){
-        return view('circulares.circulares');
+        $jefes = Trabajador::where('EsJefe', 'SI')->get();
+
+        $array =  array(
+            'jefes' => $jefes,
+        );
+
+        return view( 'circulares.circulares', $array);
     }
 
     public function circulareslista(){
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
         }else{
-            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Circular::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
     }
 
@@ -41,12 +47,11 @@ class CircularesController extends Controller
         ]);
 
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         $anio_circular =  date("Y");
 
-        
-        $maximo_circular = Circular::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_circular)->where('clave', 'like', $area->nombreArea.'%')->first();
+
+        $maximo_circular = Circular::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_circular)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
 
         if($maximo_circular){
             $num = explode("/", $maximo_circular['clave']);
@@ -57,18 +62,19 @@ class CircularesController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_circular;
+        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_circular;
 
 
         $circular = new Circular();
         $circular->fecha = date("Y-m-d H:i:s");
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $circular->autor = $user->username;
+        $circular->autor = $user->trabajador->nombre_trabajador;
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));
         $circular->cancel = $request->input('cancelado');
+        $circular->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
 
@@ -159,5 +165,5 @@ class CircularesController extends Controller
         return response()->json($message);
     }
 
-    
+
 }

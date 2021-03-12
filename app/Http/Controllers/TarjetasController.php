@@ -12,22 +12,28 @@ use Yajra\DataTables\DataTables;
 use App\User;
 use App\Tarjeta;
 use App\AreaAcademica;
+use App\Trabajador;
 
 class TarjetasController extends Controller
 {
 
     public function index(){
-        return view('tarjetas.tarjetas');
+        $jefes = Trabajador::where('EsJefe', 'SI')->get();
+
+        $array =  array(
+            'jefes' => $jefes,
+        );
+
+        return view( 'tarjetas.tarjetas', $array);
     }
 
     public function tarjetaslista(){
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
         }else{
-            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
     }
 
@@ -41,12 +47,11 @@ class TarjetasController extends Controller
         ]);
 
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         $anio_tarjeta =  date("Y");
 
-        
-        $maximo_tarjeta = Tarjeta::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_tarjeta)->where('clave', 'like', $area->nombreArea.'%')->first();
+
+        $maximo_tarjeta = Tarjeta::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_tarjeta)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
 
         if($maximo_tarjeta){
             $num = explode("/", $maximo_tarjeta['clave']);
@@ -57,7 +62,7 @@ class TarjetasController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_tarjeta;
+        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_tarjeta;
 
 
         $tarjeta = new Tarjeta();
@@ -69,6 +74,7 @@ class TarjetasController extends Controller
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
         $tarjeta->cancel = $request->input('cancelado');
+        $tarjeta->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
 
@@ -159,5 +165,5 @@ class TarjetasController extends Controller
         return response()->json($message);
     }
 
-    
+
 }

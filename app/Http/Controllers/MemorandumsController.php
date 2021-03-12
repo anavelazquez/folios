@@ -12,22 +12,28 @@ use Yajra\DataTables\DataTables;
 use App\User;
 use App\Memorandum;
 use App\AreaAcademica;
+use App\Trabajador;
 
 class MemorandumsController extends Controller
 {
 
     public function index(){
-        return view('memorandums.memorandums');
+        $jefes = Trabajador::where('EsJefe', 'SI')->get();
+
+        $array =  array(
+            'jefes' => $jefes,
+        );
+
+        return view( 'memorandums.memorandums', $array);
     }
 
     public function memorandumslista(){
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
         }else{
-            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
     }
 
@@ -41,12 +47,11 @@ class MemorandumsController extends Controller
         ]);
 
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         $anio_memorandum =  date("Y");
 
-        
-        $maximo_memorandum = Memorandum::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_memorandum)->where('clave', 'like', $area->nombreArea.'%')->first();
+
+        $maximo_memorandum = Memorandum::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_memorandum)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
 
         if($maximo_memorandum){
             $num = explode("/", $maximo_memorandum['clave']);
@@ -57,7 +62,7 @@ class MemorandumsController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_memorandum;
+        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_memorandum;
 
 
         $memorandum = new Memorandum();
@@ -69,6 +74,7 @@ class MemorandumsController extends Controller
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
         $memorandum->cancel = $request->input('cancelado');
+        $memorandum->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
 
@@ -159,5 +165,5 @@ class MemorandumsController extends Controller
         return response()->json($message);
     }
 
-    
+
 }

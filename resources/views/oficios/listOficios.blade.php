@@ -9,7 +9,7 @@
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
-      <th class="centrar">Cancelado</th>
+      <th class="centrar">Estado</th>
       <th class="centrar">
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
@@ -26,7 +26,7 @@
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
-      <th class="centrar">Cancelado</th>
+      <th class="centrar">Estado</th>
       <th></th>
     </tr>
   </tfoot>
@@ -73,7 +73,12 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="no-mr-btm" for="dirigido">Dirigido</label>
-                    <input type="text" name="dirigido" class="form-control mayusculas" id="dirigido">
+                    <select class="form-control" id="dirigido" name="dirigido">
+                      <option value="">Seleccione</option>
+                      @foreach($jefes as $jefe)
+                        <option value="{{$jefe->id_trabajador}}">{{ $jefe->nombre_trabajador }}</option>
+                      @endforeach
+                    </select>
                     <div class="invalid-feedback" id="invalid-feedback-dirigido" style="display: none"></div>
                   </div>
                 </div>
@@ -103,29 +108,38 @@
                 </div>
 
                 <div class="col-md-12">
-                  <label>Cancelado</label>
+                  <label>Estado</label>
                   <div class="row">
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoNo" value="No" checked>
-                        <label class="form-check-label" for="canceladoNo">
-                          No
+                        <input class="form-check-input" type="radio" name="estado" id="verde" value="verde" checked>
+                        <label class="form-check-label" for="verde">
+                          <i class="nav-icon fas fa-circle" style="color: green"></i>
                         </label>
                       </div>
                     </div>
 
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoSi" value="Si">
-                        <label class="form-check-label" for="canceladoSi">
-                          Si
+                        <input class="form-check-input" type="radio" name="estado" id="amarillo" value="amarillo">
+                        <label class="form-check-label" for="amarillo">
+                          <i class="nav-icon fas fa-circle" style="color: yellow"></i>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="estado" id="rojo" value="rojo">
+                        <label class="form-check-label" for="rojo">
+                          <i class="nav-icon fas fa-circle" style="color: red"></i>
                         </label>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="invalid-feedback" id="invalid-feedback-cancelado" style="display: none"></div>
+                      <div class="invalid-feedback" id="invalid-feedback-estado" style="display: none"></div>
                     </div>
                   </div>
                 </div>

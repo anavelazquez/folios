@@ -12,22 +12,28 @@ use Yajra\DataTables\DataTables;
 use App\User;
 use App\Oficio;
 use App\AreaAcademica;
+use App\Trabajador;
 
 class OficiosController extends Controller
 {
 
     public function index(){
-        return view('oficios.oficios');
+        $jefes = Trabajador::where('EsJefe', 'SI')->get();
+
+        $array =  array(
+            'jefes' => $jefes,
+        );
+
+        return view( 'oficios.oficios', $array);
     }
 
     public function oficioslista(){
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
         }else{
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->nombreArea.'%')->get())->make(true);
+            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
     }
 
@@ -37,16 +43,15 @@ class OficiosController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $user = \Auth::user();
-        $area = AreaAcademica::where('id_area', $user->area_id)->first();
 
         $anio_oficio =  date("Y");
 
-        
-        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $area->nombreArea.'%')->first();
+
+        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
 
         if($maximo_oficio){
             $num = explode("/", $maximo_oficio['clave']);
@@ -57,19 +62,20 @@ class OficiosController extends Controller
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
 
-        $clave= $area->nombreArea.'/CECyTEV/'.$num.'/'.$anio_oficio;
+        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_oficio;
 
 
         $oficio = new Oficio();
         $oficio->fecha = date("Y-m-d H:i:s");
         $oficio->dirigido = mb_strtoupper($request->input('dirigido'));;
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $oficio->autor = $user->username;
+        $oficio->autor = $user->trabajador->nombre_trabajador;
         $oficio->direcciones = 0;
         $oficio->clave = $clave;
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
         $oficio->obs = mb_strtoupper($request->input('observaciones'));
-        $oficio->cancel = $request->input('cancelado');
+        $oficio->estado = $request->input('estado');
+        $oficio->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
 
@@ -102,7 +108,7 @@ class OficiosController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $oficio = Oficio::findOrFail($id_oficio_editar);
@@ -110,7 +116,7 @@ class OficiosController extends Controller
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
         $oficio->obs = mb_strtoupper($request->input('observaciones'));
-        $oficio->cancel = $request->input('cancelado');
+        $oficio->estado = $request->input('estado');
 
         try {
             $oficio->update();
@@ -160,5 +166,5 @@ class OficiosController extends Controller
         return response()->json($message);
     }
 
-    
+
 }

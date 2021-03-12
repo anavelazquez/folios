@@ -66,7 +66,7 @@ $(document).ready(function () {
     "responsive": true,
     "columnDefs": [
       {
-        "targets": [8],
+        "targets": [7, 8],
         "className": "dt-center"
       },
       {
@@ -103,7 +103,20 @@ $(document).ready(function () {
       { "data": "clave"},
       { "data": "asunto"},
       { "data": "obs"},
-      { "data": "cancel"},
+      {
+        "data":"estado",
+        "render": function (data){
+          if(data == 'verde'){
+            return "<i class='nav-icon fas fa-circle' style='color: green'></i>";
+          }else if(data == 'amarillo'){
+            return "<i class='nav-icon fas fa-circle' style='color: yellow'></i>";
+          }else if(data == 'rojo'){
+            return "<i class='nav-icon fas fa-circle' style='color: red'></i>";
+          }else{
+            return "";
+          }
+        }
+      },
       {
         "data":0,
         "defaultContent": "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Oficio'><i class='right fas fa-edit'></i></button>  <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Oficio'><i class='right fas fa-trash-alt'></i></button>"
@@ -172,7 +185,7 @@ $(document).ready(function () {
     $("#seguimiento").val(data['seguimiento']);
     $("#asunto").val(data['asunto']);
     $("#observaciones").val(data['obs']);
-    $("#cancelado").val(data['cancel']);
+    $("#estado").val(data['estado']);
   });
 
   // ---------- Agregar Oficio ----------
