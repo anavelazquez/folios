@@ -14,10 +14,18 @@
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
         </button>
+        <!-- <th class="centrar">
+          <form action="" method="POST">
+            @csrf
+            <div class="form-group">
+                <input type="file" name="file" id="">
+            </div>
+            <button type= "submit">Subir imagen</button>
+           </form> -->
       </th>
     </tr>
   </thead>
-  <tfoot>
+  <!-- <tfoot>
     <tr>
       <th class="centrar">Fecha</th>
       <th class="centrar">Dirigido</th>
@@ -29,7 +37,7 @@
       <th class="centrar">Estado</th>
       <th></th>
     </tr>
-  </tfoot>
+  </tfoot> -->
 </table>
 
 <!-- Modal Confirmación Eliminar -->
@@ -137,6 +145,7 @@
                       </div>
                     </div>
                   </div>
+                  
                   <div class="row">
                     <div class="col-md-12">
                       <div class="invalid-feedback" id="invalid-feedback-estado" style="display: none"></div>

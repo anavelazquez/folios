@@ -61,15 +61,13 @@ class TarjetasController extends Controller
         }
 
         $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
-
         $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_tarjeta;
-
 
         $tarjeta = new Tarjeta();
         $tarjeta->fecha = date("Y-m-d H:i:s");
         $tarjeta->dirigido = mb_strtoupper($request->input('dirigido'));;
         $tarjeta->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $tarjeta->autor = $user->username;
+        $tarjeta->autor = $user->Usuario;
         $tarjeta->clave = $clave;
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
