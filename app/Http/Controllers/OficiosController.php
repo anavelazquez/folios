@@ -26,8 +26,11 @@ class OficiosController extends Controller
 
         if($user->permissions == 0){
             return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->where('autor', $user->Usuario)->get())->make(true);
-        }else{
+        }if  ($user->permissions == -1){
             return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->get())->make(true);
+        }
+        else{
+            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->get())->make(true);
         }
     }
 

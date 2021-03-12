@@ -14,6 +14,14 @@
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
         </button>
+        <!-- <th class="centrar">
+          <form action="" method="POST">
+            @csrf
+            <div class="form-group">
+                <input type="file" name="file" id="">
+            </div>
+            <button type= "submit">Subir imagen</button>
+           </form> -->
       </th>
     </tr>
   </thead>
@@ -125,7 +133,7 @@
 
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoSi" value="Rojo">
+                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoS" value="Rojo">
                         <label class="form-check-label" for="canceladoSi">
                           Rojo
                         </label>
