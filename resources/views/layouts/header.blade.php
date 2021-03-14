@@ -5,16 +5,16 @@
     <a class="navbar-brand d-none d-md-block" href="#">
       <img src="./img/logo.png" alt="" class="brand-image ew-brand-image">
     </a>
-    <li class="nav-item d-none d-sm-inline-block">
+    <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-oficios') ? 'active' : '' }}">
       <a href="{{ route('oficios') }}" class="nav-link">Oficios</a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
+    <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-circulares') ? 'active' : '' }}">
       <a href="{{ route('circulares') }}" class="nav-link">Circulares</a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
+    <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-tarjetas') ? 'active' : '' }}">
       <a href="{{ route('tarjetas') }}" class="nav-link">Tarjetas</a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
+    <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-memorandums') ? 'active' : '' }}">
       <a href="{{ route('memorandums') }}" class="nav-link">Memorándums</a>
     </li>
   </ul>

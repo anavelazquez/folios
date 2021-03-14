@@ -31,7 +31,7 @@ class TarjetasController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
         }else{
             return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
@@ -43,7 +43,7 @@ class TarjetasController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $user = \Auth::user();
@@ -71,7 +71,7 @@ class TarjetasController extends Controller
         $tarjeta->clave = $clave;
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
-        $tarjeta->cancel = $request->input('cancelado');
+        $tarjeta->estado = $request->input('estado');
         $tarjeta->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
@@ -105,7 +105,7 @@ class TarjetasController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $tarjeta = Tarjeta::findOrFail($id_tarjeta_editar);
@@ -113,7 +113,7 @@ class TarjetasController extends Controller
         $tarjeta->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
-        $tarjeta->cancel = $request->input('cancelado');
+        $tarjeta->estado = $request->input('estado');
 
         try {
             $tarjeta->update();

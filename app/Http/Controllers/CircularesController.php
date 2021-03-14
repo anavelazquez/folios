@@ -43,7 +43,7 @@ class CircularesController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $user = \Auth::user();
@@ -73,7 +73,7 @@ class CircularesController extends Controller
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));
-        $circular->cancel = $request->input('cancelado');
+        $circular->estado = $request->input('estado');
         $circular->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
@@ -107,7 +107,7 @@ class CircularesController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $circular = Circular::findOrFail($id_circular_editar);
@@ -115,7 +115,7 @@ class CircularesController extends Controller
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));
-        $circular->cancel = $request->input('cancelado');
+        $circular->estado = $request->input('estado');
 
         try {
             $circular->update();

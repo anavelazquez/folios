@@ -31,7 +31,7 @@ class MemorandumsController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
+            return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
         }else{
             return Datatables::of(\App\Memorandum::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
@@ -43,7 +43,7 @@ class MemorandumsController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $user = \Auth::user();
@@ -67,11 +67,11 @@ class MemorandumsController extends Controller
         $memorandum->fecha = date("Y-m-d H:i:s");
         $memorandum->dirigido = mb_strtoupper($request->input('dirigido'));;
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $memorandum->autor = $user->Usuario;
+        $memorandum->autor = $user->trabajador->nombre_trabajador;
         $memorandum->clave = $clave;
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
-        $memorandum->cancel = $request->input('cancelado');
+        $memorandum->estado = $request->input('estado');
         $memorandum->Trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
@@ -105,7 +105,7 @@ class MemorandumsController extends Controller
             'seguimiento' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
-            'cancelado' => 'required',
+            'estado' => 'required',
         ]);
 
         $memorandum = Memorandum::findOrFail($id_memorandum_editar);
@@ -113,7 +113,7 @@ class MemorandumsController extends Controller
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
-        $memorandum->cancel = $request->input('cancelado');
+        $memorandum->estado = $request->input('estado');
 
         try {
             $memorandum->update();

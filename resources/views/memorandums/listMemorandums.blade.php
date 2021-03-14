@@ -111,27 +111,27 @@
                   <div class="row">
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoNo" value="Verde" checked>
-                        <label class="form-check-label" for="canceladoNo">
-                          Verde 
+                        <input class="form-check-input" type="radio" name="estado" id="verde" value="verde" checked>
+                        <label class="form-check-label" for="verde">
+                          <i class="nav-icon fas fa-circle" style="color: green"></i>
                         </label>
                       </div>
                     </div>
 
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" background-color="yellow" id="canceladoSi" value="Amarillo">
-                        <label class="form-check-label" for="canceladoSi">
-                          Amarillo
+                        <input class="form-check-input" type="radio" name="estado" id="amarillo" value="amarillo">
+                        <label class="form-check-label" for="amarillo">
+                          <i class="nav-icon fas fa-circle" style="color: yellow"></i>
                         </label>
                       </div>
                     </div>
 
                     <div class="col-md-2">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelado" id="canceladoSi" value="Rojo">
-                        <label class="form-check-label" for="canceladoSi">
-                          Rojo
+                        <input class="form-check-input" type="radio" name="estado" id="rojo" value="rojo">
+                        <label class="form-check-label" for="rojo">
+                          <i class="nav-icon fas fa-circle" style="color: red"></i>
                         </label>
                       </div>
                     </div>
@@ -139,7 +139,7 @@
                   
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="invalid-feedback" id="invalid-feedback-cancelado" style="display: none"></div>
+                      <div class="invalid-feedback" id="invalid-feedback-estado" style="display: none"></div>
                     </div>
                   </div>
                 </div>
