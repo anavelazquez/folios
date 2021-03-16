@@ -70,7 +70,7 @@ $(document).ready(function () {
         "className": "dt-center"
       },
       {
-        "targets": [0,5,6],
+        "targets": [0,1,5,6],
         class: "wrap"
       }
     ],
@@ -97,7 +97,7 @@ $(document).ready(function () {
         }
       },
 
-      { "data": "dirigido"},
+      { "data": "destinatario.nombre_trabajador"},
       { "data": "seguimiento"},
       { "data": "autor"},
       { "data": "clave"},
