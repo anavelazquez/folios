@@ -35,9 +35,9 @@ class OficiosController extends Controller
         }if($user->permissions == -1) {
             return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
-        else{
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->get())->make(true);
-        }
+        if($user->permissions == -2){
+            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
+         }
     }
 
     public function saveOficio(Request $request){
