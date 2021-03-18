@@ -13,3 +13,4 @@ class Memorandum extends Model
         return $this->belongsTo('App\Trabajador', 'dirigido', 'id_trabajador');
     }
 }
+

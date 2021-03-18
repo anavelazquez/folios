@@ -32,12 +32,12 @@ class MemorandumsController extends Controller
 
         if($user->permissions == 0){
             return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
-        }if($user->permissions == -1) {
+        } if($user->permissions == -1){
             return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
-        if($user->permissions == -2){
-            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
-        }
+    if($user->permissions == -2){
+        return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
+    }
     }
 
     public function saveMemorandum(Request $request){

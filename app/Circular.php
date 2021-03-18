@@ -13,3 +13,4 @@ class Circular extends Model
         return $this->belongsTo('App\Trabajador', 'dirigido', 'id_trabajador');
     }
 }
+

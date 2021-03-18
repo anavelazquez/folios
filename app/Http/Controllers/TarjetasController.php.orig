@@ -31,15 +31,9 @@ class TarjetasController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-<<<<<<< HEAD
             return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('autor', $user->username)->get())->make(true);
         }else{
             return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
-=======
-            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->where('autor', $user->Usuario)->get())->make(true);
-        }else{
-            return Datatables::of(\App\Tarjeta::orderBy('id', 'DESC')->where('clave','like',$area->cla.'%')->get())->make(true);
->>>>>>> 4a377149f7cfc09bb311d00cf0b84d1fca31dac2
         }
     }
 
