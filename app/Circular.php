@@ -9,4 +9,7 @@ class Circular extends Model
     protected $primaryKey = 'id';
 
     public $timestamps = false;
+    public function destinatario(){
+        return $this->belongsTo('App\Trabajador', 'dirigido', 'id_trabajador');
+    }
 }

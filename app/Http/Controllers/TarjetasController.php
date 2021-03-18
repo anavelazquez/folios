@@ -31,12 +31,12 @@ class TarjetasController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
         }if($user->permissions == -1) {
-            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
         }
-        else{
-            return Datatables::of(\App\Oficio::orderBy('id', 'DESC')->get())->make(true);
+        if($user->permissions == -2){
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
         }
     }
 
@@ -70,7 +70,7 @@ class TarjetasController extends Controller
         $tarjeta->fecha = date("Y-m-d H:i:s");
         $tarjeta->dirigido = mb_strtoupper($request->input('dirigido'));;
         $tarjeta->seguimiento = mb_strtoupper($request->input('seguimiento'));
-        $tarjeta->autor = $user->Usuario;
+        $tarjeta->autor = $user->trabajador->nombre_trabajador;
         $tarjeta->clave = $clave;
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
