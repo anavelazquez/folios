@@ -111,7 +111,7 @@ $(document).ready(function () {
           }else if(data == 'amarillo'){
             return "<i class='nav-icon fas fa-circle' style='color: yellow'></i>";
           }else if(data == 'rojo'){
-            return "<i class='nav-icon fas fa-circle' style='color: red'></i>";
+            return "<i class='fas fa-exclamation-triangle'></i>";
           }else{
             return "";
           }

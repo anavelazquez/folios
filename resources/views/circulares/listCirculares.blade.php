@@ -114,7 +114,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="estado" id="verde" value="verde" checked>
                         <label class="form-check-label" for="verde">
-                          <i class="nav-icon fas fa-circle" style="color: green"></i>
+                          <i class="nav-icon fas fa-circle" style="color: green"></i>Atendido
                         </label>
                       </div>
                     </div>
@@ -123,7 +123,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="estado" id="amarillo" value="amarillo">
                         <label class="form-check-label" for="amarillo">
-                          <i class="nav-icon fas fa-circle" style="color: yellow"></i>
+                          <i class="nav-icon fas fa-circle" style="color: yellow"></i>En proceso
                         </label>
                       </div>
                     </div>
@@ -132,7 +132,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="radio" name="estado" id="rojo" value="rojo">
                         <label class="form-check-label" for="rojo">
-                          <i class="nav-icon fas fa-circle" style="color: red"></i>
+                          <i class="nav-icon fas fa-circle" style="color: red"></i>Nadie atendió
                         </label>
                       </div>
                     </div>
