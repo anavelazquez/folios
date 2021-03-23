@@ -136,6 +136,15 @@
                         </label>
                       </div>
                     </div>
+                    <div class="col-md-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="estado" id="cancelado" value="cancelado">
+                        <label class="form-check-label" for="cancelado">
+                        <i class="nav-icon fas fa-exclamation-triangle" style="color: black"></i>cancelar
+                        </label>
+                      </div>
+                    </div>
+
                   </div>
                   
                   <div class="row">

@@ -112,6 +112,8 @@ $(document).ready(function () {
             return "<i class='nav-icon fas fa-circle' style='color: yellow'></i>";
           }else if(data == 'rojo'){
             return "<i class='nav-icon fas fa-circle' style='color: red'></i>";
+          }else if(data == 'cancelado'){
+            return "<i class='nav-icon fas fa-exclamation-triangle' style='color: black'></i>";
           }else{
             return "";
           }
