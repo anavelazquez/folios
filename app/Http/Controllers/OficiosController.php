@@ -13,15 +13,23 @@ use App\User;
 use App\Oficio;
 use App\AreaAcademica;
 use App\Trabajador;
+use App\Cancelado;
 
 class OficiosController extends Controller
 {
 
     public function index(){
+        $user = \Auth::user();
+        $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+        $date = Carbon::now();
+        $fecha_actual = $date->format('d-m-Y');
+        
 
         $array =  array(
+            'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'fecha_actual' =>$fecha_actual
         );
 
         return view( 'oficios.oficios', $array);
@@ -104,7 +112,6 @@ class OficiosController extends Controller
         return response()->json($message);
     }
 
-
     public function updateOficio($id_oficio_editar, Request $request){
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
@@ -169,5 +176,36 @@ class OficiosController extends Controller
         return response()->json($message);
     }
 
+    public function cancelarOficio($id_oficio_cancelar, $firma){
+        $user = \Auth::user();
 
+        $oficio = Oficio::findOrFail($id_oficio_cancelar);
+        $oficio->estado = 'cancelado';
+        
+        DB::beginTransaction();
+        try {
+            $oficio->update();
+
+            $cancelado = new Cancelado();
+            //$cancelado->id_documento = $id_oficio_cancelar;
+            $cancelado->usuario = $user->ID;
+            $cancelado->fecha_cancelado = Carbon::now();
+            $cancelado->firma = $firma;
+            $cancelado->save();
+            DB::commit();
+            $message = array(
+                'type' => 'success',
+                'text' => 'El oficio se ha actualizado correctamente'
+            );
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = array(
+                'type' => 'error',
+                'text' => 'No se pudo actualizar el oficio',
+                'error'=> $e->getMessage()
+            );
+        }
+
+        return response()->json($message);
+    }
 }

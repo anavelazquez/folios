@@ -172,6 +172,7 @@ $(document).ready(function () {
     var data = table.row( $(this).parents('tr') ).data();
     id_oficio_editar = data['id'];
     console.log('data', data);
+    console.log('id_oficio_editar', id_oficio_editar);
 
     //Cambiar etiqueta titulo modal a Editar
     var boton = document.getElementById('modal-label');
@@ -188,6 +189,7 @@ $(document).ready(function () {
     $("#asunto").val(data['asunto']);
     $("#observaciones").val(data['obs']);
     $("#estado").val(data['estado']);
+    $("input[name='estado'][value='"+data['estado']+"']").prop("checked",true);
   });
 
   // ---------- Agregar Oficio ----------
@@ -288,9 +290,67 @@ $(document).ready(function () {
           title: msg['text']
         })
       })
-
     }
   });
+
+  // ---------- Modal Confirmar Eliminar ----------
+  $('#oficios').on( 'click', '#btn-eliminar', function () {
+    var data = table.row( $(this).parents('tr') ).data();
+    id_oficio = data['id'];
+
+    $("#oficio").html(data['clave']);
+
+    var options = {
+      'backdrop': 'static'
+    };
+
+    $('#ModalEliminar').modal(options);
+  });
+
+  // ---------- Modal Cancelar oficio ----------
+  $('#oficios-form').change(function(){
+      selected_value = $("input[name='estado']:checked").val();
+      if(selected_value == 'cancelado'){
+        $("#ModalCancelar").modal('show');
+        console.log('id_oficio_editar', id_oficio_editar);
+      }
+  });
+
+  // ---------- Cancelar Oficio ----------
+  $('#cancelar-form').on('submit', function(e) {
+      e.preventDefault();
+      var f = $(this);
+
+      firma = $("input[name='firma']:checked").val();
+      console.log('firma', firma);
+
+      $.ajax({
+        method: "GET",
+        url: 'cancelar-oficio/'+id_oficio_editar+'/'+firma })
+      .done(function (msg) {
+        $("#ModalEditar").modal('hide');
+        $("#ModalCancelar").modal('hide');
+        table.ajax.reload();
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }, 800);
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
+  });
+
 
 
 

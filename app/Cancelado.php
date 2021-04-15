@@ -3,8 +3,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AreaAcademica extends Model
+class Cancelado extends Model
 {
     protected $table = 'cancelado';
     protected $primaryKey = 'id_cancelado';
+    public $timestamps = false;
 }
