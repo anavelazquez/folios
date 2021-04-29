@@ -23,11 +23,14 @@
                   <h4 class="modal-title">Conceptos de los documentos</h4>
               </div>
               <div class="modal-body">
-                  <p>Apartado donde diga como usar el sistema:</p>
-                  <p class="text-info">Que va en un oficio, circulares, memorandums y tarjetas.
-                  <br>
-                  Clasificación de archivos: de concentracion, histórico... etc.</p>
-              </div>
+                  <p>Tarjetas y memorandums</p>
+                  <p class="text-danger"> Identificación del documento: Archivo/Consecutivo</p>
+                  
+                  <p>El documento deberá contener las palabras <strong>Archivo/Consecutivo</strong>  que serviran para identificar el lugar de permanencia
+                  de los documentos de archivo, es decir, al documento original o acuse original se subrayará la palabra Archivo como 
+                  método de identificacion y será el área o departamento que le dé seguimiento al documento el responsable de conservar el mismo.</p>
+    
+    </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
               </div>

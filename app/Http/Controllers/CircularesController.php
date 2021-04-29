@@ -63,9 +63,11 @@ class CircularesController extends Controller
             $numero = 1;
         }
 
-        $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
+        $num = str_pad($numero, 4, "0", STR_PAD_LEFT);
 
-        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_circular;
+        $clave= $user->trabajador->departamento->area->cla.'/OFICIO No. CECyTEV/'.$num.'/'.$anio_circular;
+        /*$clave= $user->trabajador->departamento->clave.'/CECyTEV/'.$num.'/'.$anio_oficio;*/
+      /*Las claves se tomarán directamente de la tabla "departamentos" en "clave"  */
 
 
         $circular = new Circular();
@@ -73,6 +75,7 @@ class CircularesController extends Controller
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $circular->autor = $user->trabajador->nombre_trabajador;
+        $circular->TipoArchivo = 0;
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));

@@ -63,14 +63,18 @@ class MemorandumsController extends Controller
             $numero = 1;
         }
 
-        $num = str_pad($numero, 5, "0", STR_PAD_LEFT);
-        $clave= $user->trabajador->departamento->area->cla.'/CECyTEV/'.$num.'/'.$anio_memorandum;
+        $num = str_pad($numero, 4, "0", STR_PAD_LEFT);
+        $clave= $user->trabajador->departamento->area->cla.'/OFICIO No. CECyTEV/'.$num.'/'.$anio_memorandum;
+        /*$clave= $user->trabajador->departamento->clave.'/CECyTEV/'.$num.'/'.$anio_oficio;*/
+      /*Las claves se tomarán directamente de la tabla "departamentos" en "clave"  */
+      
 
         $memorandum = new Memorandum();
         $memorandum->fecha = date("Y-m-d H:i:s");
         $memorandum->dirigido = mb_strtoupper($request->input('dirigido'));;
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $memorandum->autor = $user->trabajador->nombre_trabajador;
+        $memorandum->TipoArchivo = 0; //archivo/consecutivo
         $memorandum->clave = $clave;
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
