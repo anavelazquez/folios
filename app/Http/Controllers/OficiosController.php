@@ -25,7 +25,6 @@ class OficiosController extends Controller
         $date = Carbon::now();
         $fecha_actual = $date->format('d-m-Y');
         
-
         $array =  array(
             'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
@@ -35,17 +34,35 @@ class OficiosController extends Controller
         return view( 'oficios.oficios', $array);
     }
 
+    public function verificarOficios($id_oficio_cancelar){
+        $oficio = Oficio::findOrFail($id_oficio_cancelar);
+
+        if($oficio->estado == 'cancelado'){
+            $message = array(
+                'cancelado' => 1,
+                'type' => 'warning',
+                'text' => 'El oficio ya ha sido cancelado'
+            );
+        }else{
+            $message = array(
+                'cancelado' => 0
+            );
+        }
+        return response()->json($message);
+    }
+
     public function oficioslista(){
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
-        }if($user->permissions == -1) {
-            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+        }elseif($user->permissions == -1) {
+            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+        }elseif($user->permissions == -2){
+            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
-        if($user->permissions == -2){
-            return Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
-         }
+        
+        return $datatable;
     }
 
     public function saveOficio(Request $request){
@@ -180,30 +197,41 @@ class OficiosController extends Controller
         $user = \Auth::user();
 
         $oficio = Oficio::findOrFail($id_oficio_cancelar);
-        $oficio->estado = 'cancelado';
-        
-        DB::beginTransaction();
-        try {
-            $oficio->update();
 
-            $cancelado = new Cancelado();
-            //$cancelado->id_documento = $id_oficio_cancelar;
-            $cancelado->usuario = $user->ID;
-            $cancelado->fecha_cancelado = Carbon::now();
-            $cancelado->firma = $firma;
-            $cancelado->save();
-            DB::commit();
+        if($oficio->estado == 'cancelado'){
             $message = array(
-                'type' => 'success',
-                'text' => 'El oficio se ha actualizado correctamente'
+                'type' => 'warning',
+                'text' => 'El oficio ya ha sido cancelado'
             );
-        } catch (\Exception $e) {
-            DB::rollback();
-            $message = array(
-                'type' => 'error',
-                'text' => 'No se pudo actualizar el oficio',
-                'error'=> $e->getMessage()
-            );
+        }else{
+            $oficio->estado = 'cancelado';
+        
+            DB::beginTransaction();
+            try {
+                $cancelado = new Cancelado();
+                $cancelado->usuario = $user->ID;
+                $cancelado->fecha_cancelado = Carbon::now();
+                $cancelado->firma = $firma;
+                $cancelado->save();
+                
+                $id_cancelado = $cancelado->id_cancelado;
+
+                $oficio->cancelado_id = $id_cancelado;
+                $oficio->update(); 
+
+                DB::commit();
+                $message = array(
+                    'type' => 'success',
+                    'text' => 'El oficio se ha actualizado correctamente'
+                );
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = array(
+                    'type' => 'error',
+                    'text' => 'No se pudo actualizar el oficio',
+                    'error'=> $e->getMessage()
+                );
+            }
         }
 
         return response()->json($message);

@@ -13,30 +13,54 @@ use App\User;
 use App\Memorandum;
 use App\AreaAcademica;
 use App\Trabajador;
+use App\Cancelado;
 
 class MemorandumsController extends Controller
 {
 
     public function index(){
+        $user = \Auth::user();
+        $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
-
+        $date = Carbon::now();
+        $fecha_actual = $date->format('d-m-Y');
+        
         $array =  array(
+            'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'fecha_actual' =>$fecha_actual
         );
 
         return view( 'memorandums.memorandums', $array);
+    }
+
+    public function verificarMemorandums($id_memorandum_cancelar){
+        $memorandum = Memorandum::findOrFail($id_memorandum_cancelar);
+
+        if($memorandum->estado == 'cancelado'){
+            $message = array(
+                'cancelado' => 1,
+                'type' => 'warning',
+                'text' => 'El Memorándum ya ha sido cancelado'
+            );
+        }else{
+            $message = array(
+                'cancelado' => 0
+            );
+        }
+        return response()->json($message);
     }
 
     public function memorandumslista(){
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
+            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         } if($user->permissions == -1){
-            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
+            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
     if($user->permissions == -2){
-        return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
+        return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
     }
     }
 
@@ -161,6 +185,50 @@ class MemorandumsController extends Controller
                 'type' => 'warning',
                 'text' => 'No se encuentra el memorándum que desea eliminar'
             );
+        }
+
+        return response()->json($message);
+    }
+
+    public function cancelarMemorandum($id_memorandum_cancelar, $firma){
+        $user = \Auth::user();
+
+        $memorandum = Memorandum::findOrFail($id_memorandum_cancelar);
+
+        if($memorandum->estado == 'cancelado'){
+            $message = array(
+                'type' => 'warning',
+                'text' => 'El memorándum ya ha sido cancelado'
+            );
+        }else{
+            $memorandum->estado = 'cancelado';
+        
+            DB::beginTransaction();
+            try {
+                $cancelado = new Cancelado();
+                $cancelado->usuario = $user->ID;
+                $cancelado->fecha_cancelado = Carbon::now();
+                $cancelado->firma = $firma;
+                $cancelado->save();
+                
+                $id_cancelado = $cancelado->id_cancelado;
+
+                $memorandum->cancelado_id = $id_cancelado;
+                $memorandum->update(); 
+
+                DB::commit();
+                $message = array(
+                    'type' => 'success',
+                    'text' => 'El memorándum se ha actualizado correctamente'
+                );
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = array(
+                    'type' => 'error',
+                    'text' => 'No se pudo actualizar el memorándum',
+                    'error'=> $e->getMessage()
+                );
+            }
         }
 
         return response()->json($message);

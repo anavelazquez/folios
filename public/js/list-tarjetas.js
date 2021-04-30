@@ -120,8 +120,14 @@ $(document).ready(function () {
         }
       },
       {
-        "data":0,
-        "defaultContent": "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button>  <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
+        "data":"permissions",
+        "render": function (data){
+          if(data == -1 || data == -2){
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
+          }else{
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
+          }
+        }
       }
     ],
     "language": {
@@ -292,6 +298,70 @@ $(document).ready(function () {
     }
   });
 
+  // ---------- Modal Cancelar Tarjeta ----------
+  $('#tarjetas').on( 'click', '#btn-cancelar', function () {
+      var data = table.row( $(this).parents('tr') ).data();
+      id_tarjeta_editar = data['id'];
+      
+      $.ajax({
+        method: "GET",
+        url: 'verificar-tarjeta/'+id_tarjeta_editar })
+      .done(function (msg) {
+        if(msg['cancelado'] == 1){
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }else{
+          $("#ModalCancelar").modal('show');
+        }
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
+
+      
+  });
+
+  // ---------- Cancelar Tarjeta ----------
+  $('#cancelar-form').on('submit', function(e) {
+      e.preventDefault();
+      var f = $(this);
+
+      firma = $("input[name='firma']:checked").val();
+
+      $.ajax({
+        method: "GET",
+        url: 'cancelar-tarjeta/'+id_tarjeta_editar+'/'+firma })
+      .done(function (msg) {
+        $("#ModalEditar").modal('hide');
+        $("#ModalCancelar").modal('hide');
+        table.ajax.reload();
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }, 800);
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
+  });
 
 
 });

@@ -25,8 +25,12 @@ Route::get('/', function () {
 //Rutas del controlador Oficios
 Route::get('/lista-oficios/{id_oficio?}', array(
 	'as' => 'oficios',
-
 	'uses' => 'OficiosController@index'
+));
+
+Route::get('/verificar-oficio/{id_oficio?}', array(
+    'as' => 'verificarOficios',
+    'uses' => 'OficiosController@verificarOficios'
 ));
 
 Route::get('/oficioslista', array(
@@ -65,6 +69,11 @@ Route::get('/lista-circulares/{id_circular?}', array(
 	'uses' => 'CircularesController@index'
 ));
 
+Route::get('/verificar-circular/{id_circular?}', array(
+    'as' => 'verificarCirculares',
+    'uses' => 'CircularesController@verificarCirculares'
+));
+
 Route::get('/circulareslista', array(
     'as' => 'circulareslista',
     'uses' => 'CircularesController@circulareslista'
@@ -88,11 +97,22 @@ Route::get('/delete-circular/{id_circular}', array(
     'uses' => 'CircularesController@deleteCircular'
 ));
 
+Route::get('/cancelar-circular/{id_circular_cancelar}/{firma}', array(
+    'as' => 'cancelarCircular',
+    'middleware' => 'auth',
+    'uses' => 'CircularesController@cancelarCircular'
+));
+
 //Rutas del controlador Tarjetas
 Route::get('/lista-tarjetas/{id_tarjeta?}', array(
     'as' => 'tarjetas',
     'middleware' => 'auth',
     'uses' => 'TarjetasController@index'
+));
+
+Route::get('/verificar-tarjeta/{id_tarjeta?}', array(
+    'as' => 'verificarTarjetas',
+    'uses' => 'TarjetasController@verificarTarjetas'
 ));
 
 Route::get('/tarjetaslista', array(
@@ -118,11 +138,22 @@ Route::get('/delete-tarjeta/{id_tarjeta}', array(
     'uses' => 'TarjetasController@deleteTarjeta'
 ));
 
+Route::get('/cancelar-tarjeta/{id_tarjeta_cancelar}/{firma}', array(
+    'as' => 'cancelarTarjeta',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@cancelarTarjeta'
+));
+
 //Rutas del controlador Memorándums
 Route::get('/lista-memorandums/{id_memorandum?}', array(
     'as' => 'memorandums',
     'middleware' => 'auth',
     'uses' => 'MemorandumsController@index'
+));
+
+Route::get('/verificar-memorandums/{id_tarjeta?}', array(
+    'as' => 'verificarMemorandums',
+    'uses' => 'MemorandumsController@verificarMemorandums'
 ));
 
 Route::get('/memorandumslista', array(
@@ -148,6 +179,11 @@ Route::get('/delete-memorandum/{id_memorandum}', array(
     'uses' => 'MemorandumsController@deleteMemorandum'
 ));
 
+Route::get('/cancelar-memorandum/{id_memorandum_cancelar}/{firma}', array(
+    'as' => 'cancelarMemorandum',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@cancelarMemorandum'
+));
 
 //Logout
 Route::get('/logout', array(

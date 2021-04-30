@@ -13,31 +13,55 @@ use App\User;
 use App\Tarjeta;
 use App\AreaAcademica;
 use App\Trabajador;
+use App\Cancelado;
 
 class TarjetasController extends Controller
 {
 
     public function index(){
+        $user = \Auth::user();
+        $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+        $date = Carbon::now();
+        $fecha_actual = $date->format('d-m-Y');
+        
 
         $array =  array(
+            'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'fecha_actual' =>$fecha_actual
         );
 
         return view( 'tarjetas.tarjetas', $array);
+    }
+
+    public function verificarTarjetas($id_tarjeta_cancelar){
+        $tarjeta = Tarjeta::findOrFail($id_tarjeta_cancelar);
+
+        if($tarjeta->estado == 'cancelado'){
+            $message = array(
+                'cancelado' => 1,
+                'type' => 'warning',
+                'text' => 'La tarjeta ya ha sido cancelada'
+            );
+        }else{
+            $message = array(
+                'cancelado' => 0
+            );
+        }
+        return response()->json($message);
     }
 
     public function tarjetaslista(){
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
-        } if($user->permissions == -1){
-            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+        }elseif($user->permissions == -1){
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+        }elseif($user->permissions == -2){
+            return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
-     if($user->permissions == -2){
-        return Datatables::of(\App\Tarjeta::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
-    }
     }
 
     public function saveTarjeta(Request $request){
@@ -161,6 +185,50 @@ class TarjetasController extends Controller
                 'type' => 'warning',
                 'text' => 'No se encuentra la tarjeta que desea eliminar'
             );
+        }
+
+        return response()->json($message);
+    }
+
+    public function cancelarTarjeta($id_tarjeta_cancelar, $firma){
+        $user = \Auth::user();
+
+        $tarjeta = Tarjeta::findOrFail($id_tarjeta_cancelar);
+
+        if($tarjeta->estado == 'cancelado'){
+            $message = array(
+                'type' => 'warning',
+                'text' => 'La tarjeta ya ha sido cancelada'
+            );
+        }else{
+            $tarjeta->estado = 'cancelado';
+        
+            DB::beginTransaction();
+            try {
+                $cancelado = new Cancelado();
+                $cancelado->usuario = $user->ID;
+                $cancelado->fecha_cancelado = Carbon::now();
+                $cancelado->firma = $firma;
+                $cancelado->save();
+                
+                $id_cancelado = $cancelado->id_cancelado;
+
+                $tarjeta->cancelado_id = $id_cancelado;
+                $tarjeta->update(); 
+
+                DB::commit();
+                $message = array(
+                    'type' => 'success',
+                    'text' => 'El tarjeta se ha actualizado correctamente'
+                );
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = array(
+                    'type' => 'error',
+                    'text' => 'No se pudo actualizar la tarjeta',
+                    'error'=> $e->getMessage()
+                );
+            }
         }
 
         return response()->json($message);

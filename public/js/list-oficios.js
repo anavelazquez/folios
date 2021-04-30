@@ -120,8 +120,14 @@ $(document).ready(function () {
         }
       },
       {
-        "data":0,
-        "defaultContent": "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Oficio'><i class='right fas fa-edit'></i></button>  <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Oficio'><i class='right fas fa-trash-alt'></i></button>"
+        "data":"permissions",
+        "render": function (data){
+          if(data == -1 || data == -2){
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Oficio'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Oficio'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Oficio'><i class='right fas fa-trash-alt'></i></button>"
+          }else{
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Oficio'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Oficio'><i class='right fas fa-trash-alt'></i></button>"
+          }
+        }
       }
     ],
     "language": {
@@ -308,12 +314,36 @@ $(document).ready(function () {
   });
 
   // ---------- Modal Cancelar oficio ----------
-  $('#oficios-form').change(function(){
-      selected_value = $("input[name='estado']:checked").val();
-      if(selected_value == 'cancelado'){
-        $("#ModalCancelar").modal('show');
-        console.log('id_oficio_editar', id_oficio_editar);
-      }
+  $('#oficios').on( 'click', '#btn-cancelar', function () {
+      var data = table.row( $(this).parents('tr') ).data();
+      id_oficio_editar = data['id'];
+      
+      $.ajax({
+        method: "GET",
+        url: 'verificar-oficio/'+id_oficio_editar })
+      .done(function (msg) {
+        if(msg['cancelado'] == 1){
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }else{
+          $("#ModalCancelar").modal('show');
+          console.log('id_oficio_editar', id_oficio_editar);
+        }
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
+
+      
   });
 
   // ---------- Cancelar Oficio ----------
@@ -350,8 +380,4 @@ $(document).ready(function () {
         console.log(jqXHR);
       });
   });
-
-
-
-
 });

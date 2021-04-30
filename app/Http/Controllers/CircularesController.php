@@ -13,30 +13,54 @@ use App\User;
 use App\Circular;
 use App\AreaAcademica;
 use App\Trabajador;
+use App\Cancelado;
 
 class CircularesController extends Controller
 {
 
     public function index(){
+        $user = \Auth::user();
+        $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+        $date = Carbon::now();
+        $fecha_actual = $date->format('d-m-Y');
 
         $array =  array(
+            'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'fecha_actual' =>$fecha_actual
         );
 
         return view( 'circulares.circulares', $array);
+    }
+
+    public function verificarCirculares($id_circular_cancelar){
+        $circular = Circular::findOrFail($id_circular_cancelar);
+
+        if($circular->estado == 'cancelado'){
+            $message = array(
+                'cancelado' => 1,
+                'type' => 'warning',
+                'text' => 'La circular ya ha sido cancelada'
+            );
+        }else{
+            $message = array(
+                'cancelado' => 0
+            );
+        }
+        return response()->json($message);
     }
 
     public function circulareslista(){
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->make(true);
+            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         }if($user->permissions == -1) {
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->make(true);
+            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
         if($user->permissions == -2){
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->get())->make(true);
+            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
     }
 
@@ -77,7 +101,7 @@ class CircularesController extends Controller
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));
         $circular->estado = $request->input('estado');
-        $circular->Trabajador_id = $user->trabajador->id_trabajador;
+        $circular->trabajador_id = $user->trabajador->id_trabajador;
 
         DB::beginTransaction();
 
@@ -168,5 +192,48 @@ class CircularesController extends Controller
         return response()->json($message);
     }
 
+    public function cancelarCircular($id_circular_cancelar, $firma){
+        $user = \Auth::user();
+
+        $circular = Circular::findOrFail($id_circular_cancelar);
+
+        if($circular->estado == 'cancelado'){
+            $message = array(
+                'type' => 'warning',
+                'text' => 'La circular ya ha sido cancelada'
+            );
+        }else{
+            $circular->estado = 'cancelado';
+        
+            DB::beginTransaction();
+            try {
+                $cancelado = new Cancelado();
+                $cancelado->usuario = $user->ID;
+                $cancelado->fecha_cancelado = Carbon::now();
+                $cancelado->firma = $firma;
+                $cancelado->save();
+                
+                $id_cancelado = $cancelado->id_cancelado;
+
+                $circular->cancelado_id = $id_cancelado;
+                $circular->update(); 
+
+                DB::commit();
+                $message = array(
+                    'type' => 'success',
+                    'text' => 'La circular se ha actualizado correctamente'
+                );
+            } catch (\Exception $e) {
+                DB::rollback();
+                $message = array(
+                    'type' => 'error',
+                    'text' => 'No se pudo actualizar la circular',
+                    'error'=> $e->getMessage()
+                );
+            }
+        }
+
+        return response()->json($message);
+    }
 
 }

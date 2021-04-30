@@ -120,8 +120,14 @@ $(document).ready(function () {
         }
       },
       {
-        "data":0,
-        "defaultContent": "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Memorándum'><i class='right fas fa-edit'></i></button>  <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Memorándum'><i class='right fas fa-trash-alt'></i></button>"
+        "data":"permissions",
+        "render": function (data){
+          if(data == -1 || data == -2){
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Memorándum'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Memorándum'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Memorándum'><i class='right fas fa-trash-alt'></i></button>"
+          }else{
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Memorándum'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Memorándum'><i class='right fas fa-trash-alt'></i></button>"
+          }
+        }
       }
     ],
     "language": {
@@ -290,6 +296,74 @@ $(document).ready(function () {
       })
 
     }
+  });
+
+  // ---------- Modal Cancelar Memorándum ----------
+  $('#memorandums').on( 'click', '#btn-cancelar', function () {
+      var data = table.row( $(this).parents('tr') ).data();
+      id_memorandum_editar = data['id'];
+      
+      $.ajax({
+        method: "GET",
+        url: 'verificar-memorandums/'+id_memorandum_editar })
+      .done(function (msg) {
+        if(msg['cancelado'] == 1){
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }else{
+          $("#ModalCancelar").modal('show');
+          console.log('id_memorandum_editar', id_memorandum_editar);
+        }
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
+
+      
+  });
+
+  // ---------- Cancelar Memorándum ----------
+  $('#cancelar-form').on('submit', function(e) {
+      e.preventDefault();
+      var f = $(this);
+
+      firma = $("input[name='firma']:checked").val();
+      console.log('firma', firma);
+
+      $.ajax({
+        method: "GET",
+        url: 'cancelar-memorandum/'+id_memorandum_editar+'/'+firma })
+      .done(function (msg) {
+        $("#ModalEditar").modal('hide');
+        $("#ModalCancelar").modal('hide');
+        table.ajax.reload();
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: msg['type'],
+            title: msg['text']
+          }); 
+        }, 800);
+      })
+      .fail(function (jqXHR, textStatus) {
+        setTimeout(function(){
+          console.log(msg);
+          Toast.fire({
+            type: 'error',
+            title: 'Ocurrió un error'
+          }); 
+        }, 800);
+        console.log(jqXHR);
+      });
   });
 
 
