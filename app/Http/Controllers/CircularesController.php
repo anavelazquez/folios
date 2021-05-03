@@ -55,9 +55,9 @@ class CircularesController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         }if($user->permissions == -1) {
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
         if($user->permissions == -2){
             return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
@@ -78,7 +78,7 @@ class CircularesController extends Controller
         $anio_circular =  date("Y");
 
 
-        $maximo_circular = Circular::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_circular)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
+        $maximo_circular = Circular::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_circular)->where('clave', 'like', $user->trabajador->departamento->clave.'%')->first();
 
         if($maximo_circular){
             $num = explode("/", $maximo_circular['clave']);
@@ -89,7 +89,7 @@ class CircularesController extends Controller
 
         $num = str_pad($numero, 4, "0", STR_PAD_LEFT);
 
-        $clave= $user->trabajador->departamento->area->cla.'/OFICIO No. CECyTEV/'.$num.'/'.$anio_circular;
+        $clave= $user->trabajador->departamento->clave.'/'.$num.'/'.$anio_circular;
         /*$clave= $user->trabajador->departamento->clave.'/CECyTEV/'.$num.'/'.$anio_oficio;*/
       /*Las claves se tomarán directamente de la tabla "departamentos" en "clave"  */
 
@@ -99,7 +99,6 @@ class CircularesController extends Controller
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $circular->autor = $user->trabajador->nombre_trabajador;
-        $circular->TipoArchivo = 0;
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));

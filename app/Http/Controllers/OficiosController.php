@@ -55,9 +55,9 @@ class OficiosController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         }elseif($user->permissions == -1) {
-            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }elseif($user->permissions == -2){
             $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
@@ -79,7 +79,7 @@ class OficiosController extends Controller
         $anio_oficio =  date("Y");
 
 
-        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
+        $maximo_oficio = Oficio::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_oficio)->where('clave', 'like', $user->trabajador->departamento->clave.'%')->first();
 
         if($maximo_oficio){
             $num = explode("/", $maximo_oficio['clave']);
@@ -89,8 +89,9 @@ class OficiosController extends Controller
         }
 
         $num = str_pad($numero, 4, "0", STR_PAD_LEFT);
+        
 
-        $clave= $user->trabajador->departamento->area->cla.'/OFICIO No. CECyTEV/'.$num.'/'.$anio_oficio;
+        $clave= $user->trabajador->departamento->clave.'/'.$num.'/'.$anio_oficio;
       /*$clave= $user->trabajador->departamento->clave.'/CECyTEV/'.$num.'/'.$anio_oficio;*/
       /*Las claves se tomarán directamente de la tabla "departamentos" en "clave"  */
 
@@ -99,7 +100,6 @@ class OficiosController extends Controller
         $oficio->dirigido = mb_strtoupper($request->input('dirigido'));;
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $oficio->autor = $user->trabajador->nombre_trabajador;
-        $oficio->TipoArchivo = 0;
         $oficio->clave = $clave;
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
         $oficio->obs = mb_strtoupper($request->input('observaciones'));
@@ -193,7 +193,7 @@ class OficiosController extends Controller
 
         return response()->json($message);
     }
-
+// Cancelar el oficio
     public function cancelarOficio($id_oficio_cancelar, $firma){
         $user = \Auth::user();
 

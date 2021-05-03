@@ -194,7 +194,9 @@ $(document).ready(function () {
     $("#asunto").val(data['asunto']);
     $("#observaciones").val(data['obs']);
     $("#estado").val(data['estado']);
+    $("input[name='estado'][value='"+data['estado']+"']").prop("checked",true);
   });
+  
 
   // ---------- Agregar Circular ----------
   $('#circulares-form').on('submit', function(e) {

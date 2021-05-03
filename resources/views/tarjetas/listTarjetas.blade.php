@@ -6,7 +6,6 @@
       <th class="centrar">Dirigido</th>
       <th class="centrar">Seguimiento</th>
       <th class="centrar">Autor</th>
-      <th class="centrar">Tipo de archivo</th>
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>

@@ -55,9 +55,9 @@ class MemorandumsController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         } if($user->permissions == -1){
-            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->area->cla.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+            return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
     if($user->permissions == -2){
         return Datatables::of(\App\Memorandum::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
@@ -78,7 +78,7 @@ class MemorandumsController extends Controller
         $anio_memorandum =  date("Y");
 
 
-        $maximo_memorandum = Memorandum::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_memorandum)->where('clave', 'like', $user->trabajador->departamento->area->cla.'%')->first();
+        $maximo_memorandum = Memorandum::orderBy('id', 'desc')->where('clave', 'like', '%'.$anio_memorandum)->where('clave', 'like', $user->trabajador->departamento->clave.'%')->first();
 
         if($maximo_memorandum){
             $num = explode("/", $maximo_memorandum['clave']);
@@ -88,7 +88,7 @@ class MemorandumsController extends Controller
         }
 
         $num = str_pad($numero, 4, "0", STR_PAD_LEFT);
-        $clave= $user->trabajador->departamento->area->cla.'/OFICIO No. CECyTEV/'.$num.'/'.$anio_memorandum;
+        $clave= $user->trabajador->departamento->clave.'/'.$num.'/'.$anio_memorandum;
         /*$clave= $user->trabajador->departamento->clave.'/CECyTEV/'.$num.'/'.$anio_oficio;*/
       /*Las claves se tomarán directamente de la tabla "departamentos" en "clave"  */
       
@@ -98,7 +98,7 @@ class MemorandumsController extends Controller
         $memorandum->dirigido = mb_strtoupper($request->input('dirigido'));;
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
         $memorandum->autor = $user->trabajador->nombre_trabajador;
-        $memorandum->TipoArchivo = 0; //archivo/consecutivo
+        // $memorandum->TipoArchivo = 0; //archivo/consecutivo
         $memorandum->clave = $clave;
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
