@@ -5,6 +5,7 @@
       <th class="centrar">Fecha</th>
       <th class="centrar">Dirigido</th>
       <th class="centrar">Seguimiento</th>
+      <th class="centrar">TipoArchivo</th>
       <th class="centrar">Autor</th>
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
@@ -88,6 +89,14 @@
                     <label class="no-mr-btm" for="seguimiento">Seguimiento</label>
                     <input type="text" name="seguimiento" class="form-control mayusculas" id="seguimiento">
                     <div class="invalid-feedback" id="invalid-feedback-seguimiento" style="display: none"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="no-mr-btm" for="TipoArchivo">TipoArchivo</label>
+                    <input type="text" name="TipoArchivo" class="form-control mayusculas" id="TipoArchivo">
+                    <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
                   </div>
                 </div>
 

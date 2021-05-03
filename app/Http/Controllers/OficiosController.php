@@ -69,6 +69,7 @@ class OficiosController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -99,6 +100,7 @@ class OficiosController extends Controller
         $oficio->fecha = date("Y-m-d H:i:s");
         $oficio->dirigido = mb_strtoupper($request->input('dirigido'));;
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $oficio->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $oficio->autor = $user->trabajador->nombre_trabajador;
         $oficio->clave = $clave;
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
@@ -134,6 +136,7 @@ class OficiosController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -142,6 +145,7 @@ class OficiosController extends Controller
         $oficio = Oficio::findOrFail($id_oficio_editar);
         $oficio->dirigido = mb_strtoupper($request->input('dirigido'));;
         $oficio->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $oficio->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $oficio->asunto = mb_strtoupper($request->input('asunto'));
         $oficio->obs = mb_strtoupper($request->input('observaciones'));
         $oficio->estado = $request->input('estado');

@@ -68,6 +68,7 @@ class TarjetasController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -97,6 +98,7 @@ class TarjetasController extends Controller
         $tarjeta->fecha = date("Y-m-d H:i:s");
         $tarjeta->dirigido = mb_strtoupper($request->input('dirigido'));;
         $tarjeta->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $tarjeta->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $tarjeta->autor = $user->trabajador->nombre_trabajador;
         $tarjeta->clave = $clave;
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
@@ -141,6 +143,7 @@ class TarjetasController extends Controller
         $tarjeta = Tarjeta::findOrFail($id_tarjeta_editar);
         $tarjeta->dirigido = mb_strtoupper($request->input('dirigido'));;
         $tarjeta->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $tarjeta->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $tarjeta->asunto = mb_strtoupper($request->input('asunto'));
         $tarjeta->obs = mb_strtoupper($request->input('observaciones'));
         $tarjeta->estado = $request->input('estado');

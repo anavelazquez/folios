@@ -31,6 +31,15 @@ function validarFormulario(msg){
         $("#invalid-feedback-seguimiento").fadeOut();
     }
 
+    if(msg.responseJSON.errors.TipoArchivo){
+      $("#TipoArchivo").addClass("is-invalid");
+      $("#invalid-feedback-TipoArchivo").html(msg.responseJSON.errors.TipoArchivo);
+      $("#invalid-feedback-TipoArchivo").fadeIn();
+  }else{
+      $("#TipoArchivo").removeClass("is-invalid");
+      $("#invalid-feedback-TipoArchivo").fadeOut();
+  }
+
     if(msg.responseJSON.errors.asunto){
         $("#asunto").addClass("is-invalid");
         $("#invalid-feedback-asunto").html(msg.responseJSON.errors.asunto);
@@ -54,6 +63,8 @@ function validarFormulario(msg){
     $("#invalid-feedback-dirigido").fadeOut();
     $("#seguimiento").removeClass("is-invalid");
     $("#invalid-feedback-seguimiento").fadeOut();
+    $("#TipoArchivo").removeClass("is-invalid");
+    $("#invalid-feedback-TipoArchivo").fadeOut();
     $("#asunto").removeClass("is-invalid");
     $("#invalid-feedback-asunto").fadeOut();
     $("#observaciones").removeClass("is-invalid");
@@ -99,6 +110,7 @@ $(document).ready(function () {
 
       { "data": "destinatario.nombre_trabajador"},
       { "data": "seguimiento"},
+      { "data": "TipoArchivo"},
       { "data": "autor"},
       { "data": "clave"},
       { "data": "asunto"},
@@ -192,6 +204,7 @@ $(document).ready(function () {
 
     $("#dirigido").val(data['dirigido']);
     $("#seguimiento").val(data['seguimiento']);
+    $("#TipoArchivo").val(data['TipoArchivo']);
     $("#asunto").val(data['asunto']);
     $("#observaciones").val(data['obs']);
     $("#estado").val(data['estado']);

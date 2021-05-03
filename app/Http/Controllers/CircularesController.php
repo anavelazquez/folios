@@ -68,6 +68,7 @@ class CircularesController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -98,6 +99,7 @@ class CircularesController extends Controller
         $circular->fecha = date("Y-m-d H:i:s");
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $circular->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $circular->autor = $user->trabajador->nombre_trabajador;
         $circular->clave = $clave;
         $circular->asunto = mb_strtoupper($request->input('asunto'));
@@ -142,6 +144,7 @@ class CircularesController extends Controller
         $circular = Circular::findOrFail($id_circular_editar);
         $circular->dirigido = mb_strtoupper($request->input('dirigido'));;
         $circular->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $circular->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $circular->asunto = mb_strtoupper($request->input('asunto'));
         $circular->obs = mb_strtoupper($request->input('observaciones'));
         $circular->estado = $request->input('estado');

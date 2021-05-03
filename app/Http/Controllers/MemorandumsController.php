@@ -68,6 +68,7 @@ class MemorandumsController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -97,8 +98,8 @@ class MemorandumsController extends Controller
         $memorandum->fecha = date("Y-m-d H:i:s");
         $memorandum->dirigido = mb_strtoupper($request->input('dirigido'));;
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $memorandum->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $memorandum->autor = $user->trabajador->nombre_trabajador;
-        // $memorandum->TipoArchivo = 0; //archivo/consecutivo
         $memorandum->clave = $clave;
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
@@ -134,6 +135,7 @@ class MemorandumsController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -142,6 +144,7 @@ class MemorandumsController extends Controller
         $memorandum = Memorandum::findOrFail($id_memorandum_editar);
         $memorandum->dirigido = mb_strtoupper($request->input('dirigido'));;
         $memorandum->seguimiento = mb_strtoupper($request->input('seguimiento'));
+        $memorandum->TipoArchivo = mb_strtoupper($request->input('TipoArchivo'));
         $memorandum->asunto = mb_strtoupper($request->input('asunto'));
         $memorandum->obs = mb_strtoupper($request->input('observaciones'));
         $memorandum->estado = $request->input('estado');
