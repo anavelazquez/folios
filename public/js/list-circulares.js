@@ -137,7 +137,7 @@ $(document).ready(function () {
           if(data == -1 || data == -2){
             return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Circular'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
           }else{
-            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button>  <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button>"
           }
         }
       }
@@ -309,10 +309,23 @@ $(document).ready(function () {
           title: msg['text']
         })
       })
-
     }
   });
 
+    // ---------- Modal Confirmar Eliminar ----------
+    $('#circulares').on( 'click', '#btn-eliminar', function () {
+      var data = table.row( $(this).parents('tr') ).data();
+      id_circular = data['id'];
+  
+      $("#circular").html(data['clave']);
+  
+      var options = {
+        'backdrop': 'static'
+      };
+  
+      $('#ModalEliminar').modal(options);
+    });
+    
   // ---------- Modal Cancelar Circular ----------
   $('#circulares').on( 'click', '#btn-cancelar', function () {
       var data = table.row( $(this).parents('tr') ).data();

@@ -158,14 +158,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="estado" id="cancelado" value="cancelado" disabled>
                     <label class="form-check-label" for="cancelado">
                     <i class="nav-icon fas fa-exclamation-triangle" style="color: black"></i>Cancelado
-                    </label>
-                  </div>
-                </div>
+                    </label> -->
+                  <!-- </div>
+                </div> -->
               </div>
             </div>
           </div>
