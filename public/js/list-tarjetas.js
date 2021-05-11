@@ -134,10 +134,15 @@ $(document).ready(function () {
       {
         "data":"permissions",
         "render": function (data){
-          if(data == -1 || data == -2){
+          if(data == -2){ //el super usuario que es el director general, tiene permisos de todo excepto editar  
+            return "<button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
+          }else if(data == -1){ //el usuario con permisos como los jefes de area tienen todos los permisos
             return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
-          }else{
-            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button>"
+          }else if(data == 0){//el usuario 0 no tiene permisos de eliminar y cancelar, solo editar en caso de que no esté cancelado
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
+          }
+          else{
+            return "";
           }
         }
       }

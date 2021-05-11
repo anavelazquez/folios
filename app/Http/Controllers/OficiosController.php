@@ -198,11 +198,11 @@ class OficiosController extends Controller
         return response()->json($message);
     }
 // Cancelar el oficio
-    public function cancelarOficio($id_oficio_cancelar, $firma){
+    public function cancelarOficio($id_oficio_cancelar, $firma, Request $request){
         $user = \Auth::user();
 
         $oficio = Oficio::findOrFail($id_oficio_cancelar);
-
+      
         if($oficio->estado == 'cancelado'){
             $message = array(
                 'type' => 'warning',
@@ -217,11 +217,13 @@ class OficiosController extends Controller
                 $cancelado->usuario = $user->ID;
                 $cancelado->fecha_cancelado = Carbon::now();
                 $cancelado->firma = $firma;
+                $cancelado->motivo = mb_strtoupper($request->input('motivo'));
                 $cancelado->save();
                 
                 $id_cancelado = $cancelado->id_cancelado;
 
                 $oficio->cancelado_id = $id_cancelado;
+            
                 $oficio->update(); 
 
                 DB::commit();
