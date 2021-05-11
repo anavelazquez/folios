@@ -234,9 +234,9 @@
               </div>
               <div class="col-md-12">
               <div class="form-group">
-                <label class="no-mr-btm" for="motivo">motivo</label>
+                <label class="no-mr-btm" for="motivo">Motivo</label>
                 <input type="text" name="motivo" class="form-control mayusculas" id="motivo">
-                <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" requiered></div>
+                <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" required></div>
               </div>
             </div>
 

@@ -376,7 +376,7 @@ $(document).ready(function () {
 
       $.ajax({
         method: "GET",
-  url: 'cancelar-oficio/'+id_oficio_editar+'/'+firma +motivo })
+        url: 'cancelar-oficio/'+id_oficio_editar+'/'+firma+'/'+motivo })
       .done(function (msg) {
         $("#ModalEditar").modal('hide');
         $("#ModalCancelar").modal('hide');

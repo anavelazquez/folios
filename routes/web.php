@@ -56,7 +56,7 @@ Route::get('/delete-oficio/{id_oficio}', array(
     'uses' => 'OficiosController@deleteOficio'
 ));
 
-Route::get('/cancelar-oficio/{id_oficio_cancelar}/{firma}', array(
+Route::get('/cancelar-oficio/{id_oficio_cancelar}/{firma}/{motivo}', array(
     'as' => 'cancelarOficio',
     'middleware' => 'auth',
     'uses' => 'OficiosController@cancelarOficio'
