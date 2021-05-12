@@ -11,6 +11,6 @@ class Oficio extends Model
     public $timestamps = false;
 
     public function destinatario(){
-        return $this->belongsTo('App\Trabajador', 'dirigido', 'id_trabajador', 'cancelado_id');
+        return $this->belongsTo('App\Trabajador', 'dirigido', 'id_trabajador', 'cancelado_id', 'id_archivo', 'TipoArchivo');
     }
 }

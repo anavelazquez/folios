@@ -14,6 +14,7 @@ use App\Circular;
 use App\AreaAcademica;
 use App\Trabajador;
 use App\Cancelado;
+use App\T_archivo;
 
 class CircularesController extends Controller
 {
@@ -22,12 +23,15 @@ class CircularesController extends Controller
         $user = \Auth::user();
         $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+        //  $tipo = T_archivo::select('tipo_archivo')->get(); 
+      $tipo = DB::table('t_archivo')->get();
         $date = Carbon::now();
         $fecha_actual = $date->format('d-m-Y');
 
         $array =  array(
             'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'tipo' => $tipo,
             'fecha_actual' =>$fecha_actual
         );
 
@@ -136,6 +140,7 @@ class CircularesController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -197,7 +202,7 @@ class CircularesController extends Controller
         return response()->json($message);
     }
 
-    public function cancelarCircular($id_circular_cancelar, $firma){
+    public function cancelarCircular($id_circular_cancelar, $firma, $motivo){
         $user = \Auth::user();
 
         $circular = Circular::findOrFail($id_circular_cancelar);
@@ -216,6 +221,7 @@ class CircularesController extends Controller
                 $cancelado->usuario = $user->ID;
                 $cancelado->fecha_cancelado = Carbon::now();
                 $cancelado->firma = $firma;
+                $cancelado->motivo = mb_strtoupper($motivo);
                 $cancelado->save();
                 
                 $id_cancelado = $cancelado->id_cancelado;

@@ -93,12 +93,25 @@
                 </div>
 
                 <div class="col-md-12">
+              <div class="form-group">
+                <label class="no-mr-btm" for="TipoArchivo">Tipo de archivo</label>
+                <select class="form-control" id="TipoArchivo" name="TipoArchivo">
+                  <option value="">Seleccione</option>
+                  @foreach($tipo as $tipos)
+                    <option value="{{$tipos->id_archivo}}">{{ $tipos->tipo_archivo }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
+              </div>
+            </div>
+
+                <!-- <div class="col-md-12">
                   <div class="form-group">
                     <label class="no-mr-btm" for="TipoArchivo">TipoArchivo</label>
                     <input type="text" name="TipoArchivo" class="form-control mayusculas" id="TipoArchivo">
                     <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-12">
                   <div class="form-group">
@@ -221,6 +234,13 @@
                   </label>
                 </div>
               </div>
+              <div class="col-md-12">
+              <div class="form-group">
+                <label class="no-mr-btm" for="motivo">Motivo</label>
+                <input type="text" name="motivo" class="form-control mayusculas" id="motivo">
+                <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" required></div>
+              </div>
+            </div>
             </div>
           </div>
         </div>

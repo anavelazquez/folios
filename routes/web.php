@@ -97,7 +97,7 @@ Route::get('/delete-circular/{id_circular}', array(
     'uses' => 'CircularesController@deleteCircular'
 ));
 
-Route::get('/cancelar-circular/{id_circular_cancelar}/{firma}', array(
+Route::get('/cancelar-circular/{id_circular_cancelar}/{firma}/{motivo}', array(
     'as' => 'cancelarCircular',
     'middleware' => 'auth',
     'uses' => 'CircularesController@cancelarCircular'
@@ -138,7 +138,7 @@ Route::get('/delete-tarjeta/{id_tarjeta}', array(
     'uses' => 'TarjetasController@deleteTarjeta'
 ));
 
-Route::get('/cancelar-tarjeta/{id_tarjeta_cancelar}/{firma}', array(
+Route::get('/cancelar-tarjeta/{id_tarjeta_cancelar}/{firma}/{motivo}', array(
     'as' => 'cancelarTarjeta',
     'middleware' => 'auth',
     'uses' => 'TarjetasController@cancelarTarjeta'
@@ -179,7 +179,7 @@ Route::get('/delete-memorandum/{id_memorandum}', array(
     'uses' => 'MemorandumsController@deleteMemorandum'
 ));
 
-Route::get('/cancelar-memorandum/{id_memorandum_cancelar}/{firma}', array(
+Route::get('/cancelar-memorandum/{id_memorandum_cancelar}/{firma}/{motivo}', array(
     'as' => 'cancelarMemorandum',
     'middleware' => 'auth',
     'uses' => 'MemorandumsController@cancelarMemorandum'

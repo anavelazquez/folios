@@ -354,10 +354,13 @@ $(document).ready(function () {
       var f = $(this);
 
       firma = $("input[name='firma']:checked").val();
+      console.log('firma', firma);
+      motivo = $("input[name='motivo']").val();
+      console.log('motivo', motivo);
 
       $.ajax({
         method: "GET",
-        url: 'cancelar-tarjeta/'+id_tarjeta_editar+'/'+firma })
+        url: 'cancelar-tarjeta/'+id_tarjeta_editar+'/'+firma+'/'+motivo })
       .done(function (msg) {
         $("#ModalEditar").modal('hide');
         $("#ModalCancelar").modal('hide');

@@ -14,6 +14,8 @@ use App\Oficio;
 use App\AreaAcademica;
 use App\Trabajador;
 use App\Cancelado;
+use App\T_archivo;
+
 
 class OficiosController extends Controller
 {
@@ -22,12 +24,15 @@ class OficiosController extends Controller
         $user = \Auth::user();
         $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+    //  $tipo = T_archivo::select('tipo_archivo')->get(); 
+      $tipo = DB::table('t_archivo')->get();
         $date = Carbon::now();
         $fecha_actual = $date->format('d-m-Y');
         
         $array =  array(
             'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'tipo' => $tipo,
             'fecha_actual' =>$fecha_actual
         );
 

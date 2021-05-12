@@ -7,7 +7,6 @@
       <th class="centrar">Seguimiento</th>
       <th class="centrar">TipoArchivo</th>
       <th class="centrar">Autor</th>
-      <!-- <th class="centrar">Tipo de archivo</th> -->
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
@@ -106,11 +105,24 @@
 
             <div class="col-md-12">
               <div class="form-group">
+                <label class="no-mr-btm" for="TipoArchivo">Tipo de archivo</label>
+                <select class="form-control" id="TipoArchivo" name="TipoArchivo">
+                  <option value="">Seleccione</option>
+                  @foreach($tipo as $tipos)
+                    <option value="{{$tipos->id_archivo}}">{{ $tipos->tipo_archivo }}</option>
+                  @endforeach
+                </select>
+                <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
+              </div>
+            </div>
+
+            <!-- <div class="col-md-12">
+              <div class="form-group">
                 <label class="no-mr-btm" for="TipoArchivo">TipoArchivo</label>
                 <input type="text" name="TipoArchivo" class="form-control mayusculas" id="TipoArchivo">
                 <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-md-12">
               <div class="form-group">
@@ -239,7 +251,6 @@
                 <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" required></div>
               </div>
             </div>
-
             </div>
           </div>
         </div>

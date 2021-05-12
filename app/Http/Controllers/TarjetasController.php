@@ -14,6 +14,7 @@ use App\Tarjeta;
 use App\AreaAcademica;
 use App\Trabajador;
 use App\Cancelado;
+use App\T_archivo;
 
 class TarjetasController extends Controller
 {
@@ -22,6 +23,8 @@ class TarjetasController extends Controller
         $user = \Auth::user();
         $usuario_trabajador = User::with('trabajador')->find($user->ID);
         $jefes = Trabajador::where('EsJefe', 'SI')->get();
+         //  $tipo = T_archivo::select('tipo_archivo')->get(); 
+      $tipo = DB::table('t_archivo')->get();
         $date = Carbon::now();
         $fecha_actual = $date->format('d-m-Y');
         
@@ -29,6 +32,7 @@ class TarjetasController extends Controller
         $array =  array(
             'nombre_trabajador' => $usuario_trabajador->trabajador->nombre_trabajador,
             'jefes' => $jefes,
+            'tipo' => $tipo,
             'fecha_actual' =>$fecha_actual
         );
 
@@ -135,6 +139,7 @@ class TarjetasController extends Controller
         $validatedData = $this->validate($request, [
             'dirigido' => 'required',
             'seguimiento' => 'required',
+            'TipoArchivo' => 'required',
             'asunto' => 'required',
             'observaciones' => 'required',
             'estado' => 'required',
@@ -196,7 +201,7 @@ class TarjetasController extends Controller
         return response()->json($message);
     }
 
-    public function cancelarTarjeta($id_tarjeta_cancelar, $firma){
+    public function cancelarTarjeta($id_tarjeta_cancelar, $firma, $motivo){
         $user = \Auth::user();
 
         $tarjeta = Tarjeta::findOrFail($id_tarjeta_cancelar);
@@ -215,6 +220,7 @@ class TarjetasController extends Controller
                 $cancelado->usuario = $user->ID;
                 $cancelado->fecha_cancelado = Carbon::now();
                 $cancelado->firma = $firma;
+                $cancelado->motivo = mb_strtoupper($motivo);
                 $cancelado->save();
                 
                 $id_cancelado = $cancelado->id_cancelado;

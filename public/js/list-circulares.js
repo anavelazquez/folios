@@ -368,10 +368,12 @@ $(document).ready(function () {
 
       firma = $("input[name='firma']:checked").val();
       console.log('firma', firma);
+      motivo = $("input[name='motivo']").val();
+      console.log('motivo', motivo);
 
       $.ajax({
         method: "GET",
-        url: 'cancelar-circular/'+id_circular_editar+'/'+firma })
+        url: 'cancelar-circular/'+id_circular_editar+'/'+firma+'/'+motivo })
       .done(function (msg) {
         $("#ModalEditar").modal('hide');
         $("#ModalCancelar").modal('hide');
