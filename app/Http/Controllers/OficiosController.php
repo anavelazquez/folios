@@ -60,11 +60,11 @@ class OficiosController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
         }elseif($user->permissions == -1) {
-            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }elseif($user->permissions == -2){
-            $datatable = Datatables::of(\App\Oficio::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
+            $datatable = Datatables::of(\App\Oficio::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
         
         return $datatable;

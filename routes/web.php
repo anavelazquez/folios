@@ -62,6 +62,12 @@ Route::get('/cancelar-oficio/{id_oficio_cancelar}/{firma}/{motivo}', array(
     'uses' => 'OficiosController@cancelarOficio'
 ));
 
+Route::get('/mostrar-oficio-cancelado/{id_oficio}', array(
+    'as' => 'oficioCancelado',
+    'middleware' => 'auth',
+    'uses' => 'OficiosController@oficioCancelado'
+));
+
 //Rutas del controlador Circulares
 Route::get('/lista-circulares/{id_circular?}', array(
 	'as' => 'circulares',
