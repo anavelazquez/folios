@@ -27,7 +27,7 @@
       <th class="centrar">Clave</th>
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
-      <th class="centrar">Cancelado</th>
+       <th class="centrar">Estado</th>
       <th></th>
     </tr>
   </tfoot> -->
@@ -194,7 +194,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modal-label">Cancelar Circular</h5>
+        <h5 class="modal-title" id="modal-label-cancelar">Cancelar Circular</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -244,7 +244,7 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" id="footer-cancelar">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="submit" class="btn btn-success" id="cancelar-circular">Cancelar Circular</button>
         </div>

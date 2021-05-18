@@ -364,6 +364,7 @@ $(document).ready(function () {
           }); 
         }else{
           $("#ModalCancelar").modal('show');
+          console.log('id_oficio_editar', id_oficio_editar);
         }
       })
       .fail(function (jqXHR, textStatus) {

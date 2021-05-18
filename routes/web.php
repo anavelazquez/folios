@@ -109,6 +109,12 @@ Route::get('/cancelar-circular/{id_circular_cancelar}/{firma}/{motivo}', array(
     'uses' => 'CircularesController@cancelarCircular'
 ));
 
+Route::get('/mostrar-circular-cancelado/{id_circular}', array(
+    'as' => 'circularCancelado',
+    'middleware' => 'auth',
+    'uses' => 'CircularesController@circularCancelado'
+));
+
 //Rutas del controlador Tarjetas
 Route::get('/lista-tarjetas/{id_tarjeta?}', array(
     'as' => 'tarjetas',
@@ -150,6 +156,12 @@ Route::get('/cancelar-tarjeta/{id_tarjeta_cancelar}/{firma}/{motivo}', array(
     'uses' => 'TarjetasController@cancelarTarjeta'
 ));
 
+Route::get('/mostrar-tarjeta-cancelado/{id_tarjeta}', array(
+    'as' => 'tarjetaCancelado',
+    'middleware' => 'auth',
+    'uses' => 'TarjetasController@tarjetaCancelado'
+));
+
 //Rutas del controlador Memorándums
 Route::get('/lista-memorandums/{id_memorandum?}', array(
     'as' => 'memorandums',
@@ -189,6 +201,12 @@ Route::get('/cancelar-memorandum/{id_memorandum_cancelar}/{firma}/{motivo}', arr
     'as' => 'cancelarMemorandum',
     'middleware' => 'auth',
     'uses' => 'MemorandumsController@cancelarMemorandum'
+));
+
+Route::get('/mostrar-memorandum-cancelado/{id_memorandum}', array(
+    'as' => 'memorandumCancelado',
+    'middleware' => 'auth',
+    'uses' => 'MemorandumsController@memorandumCancelado'
 ));
 
 //Logout

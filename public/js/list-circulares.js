@@ -110,7 +110,7 @@ $(document).ready(function () {
 
       { "data": "destinatario.nombre_trabajador"},
       { "data": "seguimiento"},
-      { "data": "TipoArchivo"},
+      { "data": "tipo_archivo.tipo_archivo"},
       { "data": "autor"},
       { "data": "clave"},
       { "data": "asunto"},
@@ -132,14 +132,25 @@ $(document).ready(function () {
         }
       },
       {
-        "data":"permissions",
-        "render": function (data){
-          if(data == -2){ //el super usuario que es el director general, tiene permisos de todo excepto editar  
-            return "<button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Circular'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
-          }else if(data == -1){ //el usuario con permisos como los jefes de area tienen todos los permisos
-            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Circular'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
-          }else if(data == 0){//el usuario 0 no tiene permisos de eliminar y cancelar, solo editar en caso de que no esté cancelado
-            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Circular'><i class='fas fa-eye'></i></button>"
+        "data": function (row, type, set){
+          if(row.permissions == -2){ //el super usuario que es el director general, tiene permisos de todo excepto editar  
+            if(row.estado != 'cancelado'){ // permitir cancelar en caso de que no esté cancelado
+              return "<button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Circular'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
+            }else { // en caso contrario mostrar el ojito 
+              return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Circular'><i class='fas fa-eye'></i></button>"
+            }
+          }else if(row.permissions == -1){ //el usuario con permisos como los jefes de area tienen todos los permisos
+            if(row.estado != 'cancelado'){ //si la circular ya está cancelada entonces mostrar el ojito
+              return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Circular'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Circular'><i class='right fas fa-trash-alt'></i></button>"
+          }else{
+           return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Circular'><i class='fas fa-eye'></i></button>"
+          }
+         } else if(row.permissions == 0){//el usuario 0 no tiene permisos de eliminar y cancelar
+          if(row.estado != 'cancelado') { //solo editar en caso de que no esté cancelado
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Circular'><i class='right fas fa-edit'></i></button>"
+          }else{
+            return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Circular'><i class='fas fa-eye'></i></button>"
+          }
           }
           else{
             return "";
@@ -336,6 +347,15 @@ $(document).ready(function () {
       var data = table.row( $(this).parents('tr') ).data();
       id_circular_editar = data['id'];
       
+      var boton = document.getElementById('modal-label-cancelar');
+      boton.innerText = "Cancelar "+data['clave'];
+      $("#motivo").val('');
+      $("#motivo").prop( "disabled", false);
+      $("input[name='firma']" ).prop( "disabled", false);
+      $('#footer-cancelar').show();
+      $("input[name='firma'][value='1']").prop("checked",true);
+
+
       $.ajax({
         method: "GET",
         url: 'verificar-circular/'+id_circular_editar })
@@ -347,6 +367,7 @@ $(document).ready(function () {
           }); 
         }else{
           $("#ModalCancelar").modal('show');
+          console.log('id_circular_editar', id_circular_editar);
         }
       })
       .fail(function (jqXHR, textStatus) {
@@ -397,6 +418,24 @@ $(document).ready(function () {
         console.log(jqXHR);
       });
   });
+
+// ---------- Modal circulares Cancelado ----------
+$('#circulares').on( 'click', '#btn-mostrar', function () {
+  var data = table.row( $(this).parents('tr') ).data();
+  
+  //Cambiar etiqueta titulo modal
+  var boton = document.getElementById('modal-label-cancelar');
+  boton.innerText = "Circular Cancelado";
+  console.log('data', data['cancelado']['usuario_cancela']['trabajador']['nombre_trabajador']);
+  $("#ModalCancelar").modal('show');
+  $("#usuario_cancela").val(data['cancelado']['usuario_cancela']['trabajador']['nombre_trabajador']);
+  $("#fecha_cancelacion").val(data['cancelado']['fecha_cancelado']);
+  $("#motivo").val(data['cancelado']['motivo']);
+  $("#motivo").prop( "disabled", true);
+  $("input[name='firma'][value='"+data['cancelado']['firma']+"']").prop("checked",true);
+  $("input[name='firma']" ).prop( "disabled", true);
+  $('#footer-cancelar').hide();
+});
 
 
 

@@ -59,13 +59,14 @@ class CircularesController extends Controller
         $user = \Auth::user();
 
         if($user->permissions == 0){
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
-        }if($user->permissions == -1) {
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
+            return Datatables::of(\App\Circular::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->where('trabajador_id', $user->trabajador->id_trabajador)->get())->addColumn('permissions', $user->permissions)->make(true);
+        }elseif($user->permissions == -1) {
+            return Datatables::of(\App\Circular::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->where('clave','like',$user->trabajador->departamento->clave.'%')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
-        if($user->permissions == -2){
-            return Datatables::of(\App\Circular::with('destinatario')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
+        elseif($user->permissions == -2){
+            return Datatables::of(\App\Circular::with('destinatario', 'tipo_archivo', 'cancelado.usuario_cancela.trabajador')->orderBy('id', 'DESC')->get())->addColumn('permissions', $user->permissions)->make(true);
         }
+        return $datatable;
     }
 
     public function saveCircular(Request $request){
@@ -201,7 +202,7 @@ class CircularesController extends Controller
 
         return response()->json($message);
     }
-
+// cancelar el oficio
     public function cancelarCircular($id_circular_cancelar, $firma, $motivo){
         $user = \Auth::user();
 
