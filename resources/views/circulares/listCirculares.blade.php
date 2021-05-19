@@ -1,5 +1,5 @@
 <!-- Tabla Circulares-->
-<table id="circulares" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%; font-size: small;">
+<table id="circulares" class="table table-striped table-bordered dt-responsive wrap justify" style="width:100%; font-size: small;">
   <thead>
     <tr>
       <th class="centrar">Fecha</th>
@@ -61,51 +61,51 @@
 <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal-label">Editar Circular</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form id="circulares-form" class="form-horizontal needs-validation" enctype="multipart/form-data">
-          {!! csrf_field() !!}
-          <div class="modal-body" id="attachment-body-content">
-            <div class="container col-md-12">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="no-mr-btm" for="dirigido">Dirigido</label>
-                    <select class="form-control" id="dirigido" name="dirigido">
-                      <option value="">Seleccione</option>
-                      @foreach($jefes as $jefe)
-                        <option value="{{$jefe->id_trabajador}}">{{ $jefe->nombre_trabajador }}</option>
-                      @endforeach
-                    </select>
-                    <div class="invalid-feedback" id="invalid-feedback-dirigido" style="display: none"></div>
-                  </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-label">Editar Circular</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="circulares-form" class="form-horizontal needs-validation" enctype="multipart/form-data">
+        {!! csrf_field() !!}
+        <div class="modal-body" id="attachment-body-content">
+          <div class="container col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="no-mr-btm" for="dirigido">Dirigido</label>
+                  <select class="form-control" id="dirigido" name="dirigido">
+                    <option value="">Seleccione</option>
+                    @foreach($jefes as $jefe)
+                    <option value="{{$jefe->id_trabajador}}">{{ $jefe->nombre_trabajador }}</option>
+                    @endforeach
+                  </select>
+                  <div class="invalid-feedback" id="invalid-feedback-dirigido" style="display: none"></div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="no-mr-btm" for="seguimiento">Seguimiento</label>
-                    <input type="text" name="seguimiento" class="form-control mayusculas" id="seguimiento">
-                    <div class="invalid-feedback" id="invalid-feedback-seguimiento" style="display: none"></div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-              <div class="form-group">
-                <label class="no-mr-btm" for="TipoArchivo">Tipo de archivo</label>
-                <select class="form-control" id="TipoArchivo" name="TipoArchivo">
-                  <option value="">Seleccione</option>
-                  @foreach($tipo as $tipos)
-                    <option value="{{$tipos->id_archivo}}">{{ $tipos->tipo_archivo }}</option>
-                  @endforeach
-                </select>
-                <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
               </div>
-            </div>
 
-                <!-- <div class="col-md-12">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="no-mr-btm" for="seguimiento">Seguimiento</label>
+                  <input type="text" name="seguimiento" class="form-control mayusculas" id="seguimiento">
+                  <div class="invalid-feedback" id="invalid-feedback-seguimiento" style="display: none"></div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="no-mr-btm" for="TipoArchivo">Tipo de archivo</label>
+                  <select class="form-control" id="TipoArchivo" name="TipoArchivo">
+                    <option value="">Seleccione</option>
+                    @foreach($tipo as $tipos)
+                    <option value="{{$tipos->id_archivo}}">{{ $tipos->tipo_archivo }}</option>
+                    @endforeach
+                  </select>
+                  <div class="invalid-feedback" id="invalid-feedback-TipoArchivo" style="display: none"></div>
+                </div>
+              </div>
+
+              <!-- <div class="col-md-12">
                   <div class="form-group">
                     <label class="no-mr-btm" for="TipoArchivo">Tipo de archivo</label>
                     <input type="text" name="TipoArchivo" class="form-control mayusculas" id="TipoArchivo">
@@ -113,77 +113,68 @@
                   </div>
                 </div> -->
 
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="no-mr-btm" for="asunto">Asunto</label>
-                    <input type="text" name="asunto" class="form-control mayusculas" id="asunto">
-                    <div class="invalid-feedback" id="invalid-feedback-asunto" style="display: none"></div>
-                  </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="no-mr-btm" for="asunto">Asunto</label>
+                  <input type="text" name="asunto" class="form-control mayusculas" id="asunto">
+                  <div class="invalid-feedback" id="invalid-feedback-asunto" style="display: none"></div>
                 </div>
+              </div>
 
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="no-mr-btm" for="observaciones">Observaciones</label>
-                    <input type="text" name="observaciones" class="form-control mayusculas" id="observaciones">
-                    <div class="invalid-feedback" id="invalid-feedback-observaciones" style="display: none"></div>
-                  </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="no-mr-btm" for="observaciones">Observaciones</label>
+                  <input type="text" name="observaciones" class="form-control mayusculas" id="observaciones">
+                  <div class="invalid-feedback" id="invalid-feedback-observaciones" style="display: none"></div>
                 </div>
+              </div>
 
-                <div class="col-md-12">
-                  <label>Estado</label>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="estado" id="verde" value="verde" checked>
-                        <label class="form-check-label" for="verde">
-                          <i class="nav-icon fas fa-circle" style="color: green"></i>Atendido
-                        </label>
-                      </div>
-                    </div>
-
-                    <div class="col-md-3">
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="estado" id="amarillo" value="amarillo">
-                        <label class="form-check-label" for="amarillo">
-                          <i class="nav-icon fas fa-circle" style="color: yellow"></i>En proceso
-                        </label>
-                      </div>
-                    </div>
-
-                    <div class="col-md-3">
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="estado" id="rojo" value="rojo">
-                        <label class="form-check-label" for="rojo">
-                          <i class="nav-icon fas fa-circle" style="color: red"></i>Nadie atendió
-                        </label>
-                      </div>
-                    </div>
-
-                    <!-- <div class="col-md-3">
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="estado" id="cancelado" value="cancelado" disabled>
-                        <label class="form-check-label" for="cancelado">
-                        <i class="nav-icon fas fa-exclamation-triangle" style="color: black"></i>Cancelado
-                        </label>
-                      </div>
-                    </div> -->
-                  </div>
-                  
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="invalid-feedback" id="invalid-feedback-estado" style="display: none"></div>
+              <div class="col-md-12">
+                <label>Estado</label>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="estado" id="verde" value="verde" checked>
+                      <label class="form-check-label" for="verde">
+                        <i class="nav-icon fas fa-circle" style="color: green"></i>Atendido
+                      </label>
                     </div>
                   </div>
+
+                  <div class="col-md-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="estado" id="amarillo" value="amarillo">
+                      <label class="form-check-label" for="amarillo">
+                        <i class="nav-icon fas fa-circle" style="color: yellow"></i>En proceso
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="estado" id="rojo" value="rojo">
+                      <label class="form-check-label" for="rojo">
+                        <i class="nav-icon fas fa-circle" style="color: red"></i>Nadie atendió
+                      </label>
+                    </div>
+                  </div>
+
                 </div>
+              </div>
 
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="invalid-feedback" id="invalid-feedback-estado" style="display: none"></div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-success" id="editar-circular">Agregar</button>
-          </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-success" id="editar-circular">Agregar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -199,7 +190,7 @@
         </button>
       </div>
       <form id="cancelar-form" name="cancelar-form" class="form-horizontal needs-validation" autocomplete="off">
-      {!! csrf_field() !!}
+        {!! csrf_field() !!}
         <div class="modal-body" id="attachment-body-content">
           <div class="container col-md-12">
             <div class="row">
@@ -235,12 +226,12 @@
                 </div>
               </div>
               <div class="col-md-12">
-              <div class="form-group">
-                <label class="no-mr-btm" for="motivo">Motivo</label>
-                <input type="text" name="motivo" class="form-control mayusculas" id="motivo">
-                <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" required></div>
+                <div class="form-group">
+                  <label class="no-mr-btm" for="motivo">Motivo</label>
+                  <input type="text" name="motivo" class="form-control mayusculas" id="motivo">
+                  <div class="invalid-feedback" id="invalid-feedback-motivo" style="display: none" required></div>
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -255,5 +246,5 @@
 <!-- /Modal Cancelar -->
 
 @section('js')
-  <script src="{{ asset('js/list-circulares.js') }}"></script>
+<script src="{{ asset('js/list-circulares.js') }}"></script>
 @stop

@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+<link rel="stylesheet" href="css/estilos.css">
 	<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -8,26 +9,27 @@
         <div class="row">
           <div class="col-sm-6">
             <!--------------------Modal para memorandums, como ayuda------------------------------------ inicio de modal-->
-            <a href="#mem" role="button"  title="¿En que momento se genera un memorándum?" class="btn btn-large btn-success" data-toggle="modal"><i class="fas fa-book-open"></i></a>
+            <a href="#mem" role="button"  title="¿En que momento se genera un memorándum?" class="btn btn-large btn-danger" data-toggle="modal"><i class="fas fa-book-open"></i></a>
   <!-- Ventana  -->
   <div id="mem" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                  <h4 class="modal-title">¿En que momento se genera un Memorándum?</h4>
+                  <h4 class="modal-title"><strong>¿En que momento se genera un Memorándum?</strong> </h4>
               </div>
-              <div class="modal-body">
-                <ul class="text-justify">
+              <div class="modm">
+                <ul>
                 <li> Texto breve y puntual sobre un tema en específico.</li>
-                <li> Va dirigido de el jefe inmediato superior al destinatario para su atención</li>
-                <hr>
-                <p class="text-danger text-justify">Ejemplo: El director de planeación da a conocer a la Lic. Mónica García que deberá asistir
-                a un curso en la Cd. de Boca del Río por medio de memorándum indicando el día, fecha y hora.</p>
+                <li> Va dirigido de el jefe inmediato superior al destinatario para su atención
+                 </li>
+                 <br><br><br>
+              <strong>Ejemplo: </strong>  El director de planeación da a conocer a la Lic. Mónica García que deberá asistir
+                a un curso en la Cd. de Boca del Río por medio de memorándum indicando el día, fecha y hora.
              </ul>
     </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
               </div>
           </div>
       </div>

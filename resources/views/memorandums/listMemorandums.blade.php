@@ -1,5 +1,5 @@
 <!-- Tabla Memorandums-->
-<table id="memorandums" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%; font-size: small;">
+<table id="memorandums" class="table table-striped table-bordered dt-responsive wrap" style="width:100%; font-size: small;">
   <thead>
     <tr>
       <th class="centrar">Fecha</th>

@@ -1,9 +1,11 @@
 @extends('layouts.master')
 @section('content')
+<link rel="stylesheet" href="css/estilos.css">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
@@ -15,19 +17,19 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">¿En qué momento se genera un oficio?</h4>
+                <h4 class="modal-title"><strong>¿En qué momento se genera un oficio?</strong> </h4>
               </div>
-              <div class="modal-body text-justify">
+              <div class="moda">
                 <ul>
                   <li>Medio de comunicación entre el colegio y las secretarías, dependecias, instituciones, órganos externos, entre otros.</li>
                   <li>De manera interna se utiliza para comunicar disposiciones, solicitar información, atender un trámite específico, orientar o atender dudas, órdenes, informes entre las diferentes áreas del colegio.</li>
                   <li>Para turnar solicitudes o requerimientos de información de una área a otra.</li>
-                  <li>Solamente serán generados por las áreas del CECyTE Veracruz. <strong>(Los departamentos NO pueden emitir Oficios)</strong></li>
+                  <li>Solamente serán generados por las áreas del CECyTE Veracruz. <br><strong>(Los departamentos NO pueden emitir Oficios)</strong></li>
                   <li>Se dirige de manera lineal de Dirección a Dirección y con atención al Departamento que le dará  seguimiento, <strong>en caso de ser necesario.</strong></li>
                 </ul>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

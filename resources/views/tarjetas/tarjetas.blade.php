@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+<link rel="stylesheet" href="css/estilos.css">
 	<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -8,33 +9,35 @@
         <div class="row">
           <div class="col-sm-6">
             <!--------------------Modal para Tarjetas, como ayuda------------------------------------ inicio de modal-->
-            <a href="#tar" role="button"  title="¿En que momento se genera una tarjeta?" class="btn btn-large btn-success" data-toggle="modal"><i class="fas fa-book-open"></i></a>
+            <a href="#tar" role="button"  title="¿En que momento se genera una tarjeta?" class="btn btn-large btn-secondary" data-toggle="modal"><i class="fas fa-book-open"></i></a>
   <!-- Ventana  -->
   <div id="tar" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                  <h4 class="modal-title">¿En qué momento se genera una tarjeta informativa?</h4>
+                  <h4 class="modal-title"><strong>¿En qué momento se genera una tarjeta informativa?</strong> </h4>
               </div>
-              <div class="modal-body text-justify">
+              <div class="modat">
                 <ul>
                 <li>Medio de comunicación dentro del Colegio, que se utiliza para realizar peticiones de manera formal, 
                 breve e inmediata sobre informaciónn, material, apoyo técnico, etc.</li>
-                <p class="text-danger"><strong>Ejemplo:</strong>El titular de la Dirección de planeación realiza una solicitud de material
+                <br>
+                <strong>Ejemplo: </strong> 
+                <br> El titular de la Dirección de planeación realiza una solicitud de material
                 por medio de una Tarjeta al Depto. de Recursos Materiales, la cual deberá dirigirse al Titular del Área Administrativa con 
-                atención al Jefe del Departamento antes mencionado.</p>
+                atención al Jefe del Departamento antes mencionado.
                 
                 <li>Se dirige de manera lineal de Dirección a Dirección y Departamento a Departamento.</li>
                 <hr>
                 <p> En caso de que se deba contestar un documento, éste se responderá con el mismo tipo de documento
-                es decir: <br>
+                es decir: <br><br>
                 <strong> Oficio ---> Se contesta con Oficio </strong><br>
                 <strong>  Tarjeta ---> Se contesta con Tarjeta </strong></p>
                 </ul>
     </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
               </div>
           </div>
       </div>

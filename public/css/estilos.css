@@ -1,0 +1,85 @@
+/* Estilos para la plantilla de oficios, mdal de ayuda */
+.moda ul{
+ text-align: justify;
+column-count: 2;
+column-gap: 2rem;
+margin-right: 20px;
+margin-top: 13px;
+
+
+}
+.moda{
+   
+    background-image: url(../img/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: 130%;
+    background-position:center;
+   }
+  /* aqui termina los estilos para oficios */
+/* -------------------------------------------------------------- */
+  /* Estilos para la plantilla de circulares, mdal de ayuda */
+
+.mod ul{
+    text-align: justify;
+   column-count: 2;
+   column-gap: 2rem;
+   margin-right: 20px;
+   margin-top: 13px;
+   
+   
+   }
+   .mod{
+      
+       background-image: url(../img/fondo1.jpg);
+       background-repeat: no-repeat;
+       background-size: 100%;
+       background-position:bottom;
+      }
+     /* aqui termina los estilos para circulares */
+
+     /* ---------------------------------------------------------------- */
+
+     /* Estilos para la plantilla de memorandums, mdal de ayuda */
+
+.modm ul{
+    text-align: justify;
+   column-count: 2;
+   column-gap: 2rem;
+   margin-right: 20px;
+   margin-top: 13px;
+   
+   
+   }
+   .modm{
+      
+       background-image: url(../img/fondo2.jpg);
+       background-repeat: no-repeat;
+       background-size: 100%;
+       background-position:bottom;
+      }
+     /* aqui termina los estilos para memorandums */
+
+     /* ---------------------------------------------------------------- */
+
+      /* Estilos para la plantilla de tarjetas, mdal de ayuda */
+
+.modat ul{
+    text-align: justify;
+   column-count: 2;
+   column-gap: 2rem;
+   margin-right: 20px;
+   margin-top: 13px;
+   
+   
+   }
+   .modat{
+      
+       background-image: url(../img/fondo3.jpg);
+       background-repeat: no-repeat;
+       background-size: 150%;
+       background-position:center;
+      }
+     /* aqui termina los estilos para tarjetas*/
+     
+   
+     

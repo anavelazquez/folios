@@ -25,12 +25,12 @@
         <i class="fa fa-user"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <div class="dropdown-item p-3"><i class="fa fa-user mr-2"></i>admin</div>
+        <div class="dropdown-item p-3"><i class="fa fa-user mr-2"></i>Usuario</div>
         
         
         <div class="dropdown-divider"></div>
         <div class="dropdown-footer p-2 text-right">
-          <a class="btn btn-default" href="{{ route('logout') }}">Logout</a>
+          <a class="btn btn-default" href="{{ route('logout') }}">Salir</a>
         </div>
         
       </div>

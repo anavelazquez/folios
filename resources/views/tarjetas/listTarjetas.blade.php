@@ -1,5 +1,5 @@
 <!-- Tabla Tarjetas-->
-<table id="tarjetas" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%; font-size: small;">
+<table id="tarjetas" class="table table-striped table-bordered dt-responsive wrap table-justify" style="width:100%; font-size: small;">
   <thead>
     <tr>
       <th class="centrar">Fecha</th>

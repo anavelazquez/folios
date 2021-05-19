@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+<link rel="stylesheet" href="css/estilos.css">
 	<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -8,24 +9,26 @@
         <div class="row">
           <div class="col-sm-6">
              <!--------------------Modal para circulares, como ayuda------------------------------------ inicio de modal-->
-             <a href="#cir" role="button"  title="¿En que momento se genera una circular?" class="btn btn-large btn-success" data-toggle="modal"><i class="fas fa-book-open"></i></a>
+             <a href="#cir" role="button"  title="¿En que momento se genera una circular?" class="btn btn-large btn-primary" data-toggle="modal"><i class="fas fa-book-open"></i></a>
   <!-- Ventana  -->
   <div id="cir" class="modal fade">
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                  <h4 class="modal-title">¿En que momento se genera una Circular?</h4>
+                  <h4 class="modal-title"><strong>¿En que momento se genera una Circular?</strong> </h4>
               </div>
-              <div class="modal-body text-justify">
+              <div class="mod">
                   <ul >
                   <li>Informa sobre un tema de interés general.</li>
                   <li>Informar a un determinado grupo de personas el lugar, fecha y hora de un evento, circunstancias, noticias o hechos 
-                  que se deben tomar en consideración <strong class="text-danger">(ejemplo: una capacitación, taller, etc.)</strong></li>
+                  que se deben tomar en consideración </li>
+                  <br>
+                  <strong>Ejemplo:</strong> <br> Una capacitación, taller, etc.
                   </ul>
     </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
               </div>
           </div>
       </div>
