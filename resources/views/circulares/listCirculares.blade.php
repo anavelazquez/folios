@@ -11,7 +11,7 @@
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
       <th class="centrar">Estado</th>
-      <th class="centrar">
+      <th class="centrar" style="width: 130px;">
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
         </button>

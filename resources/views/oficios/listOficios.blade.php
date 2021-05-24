@@ -1,5 +1,5 @@
 <!-- Tabla Oficios-->
-<table id="oficios" class="table table-striped table-bordered dt-responsive wrap" style="width:100%; font-size: small;">
+<table id="oficios" class="table table-striped table-bordered dt-responsive wrap text" style="width:100%; font-size: small;">
   <thead>
     <tr>
       <th class="centrar">Fecha</th>
@@ -11,7 +11,7 @@
       <th class="centrar">Asunto</th>
       <th class="centrar">Observaciones</th>
       <th class="centrar">Estado</th>
-      <th class="centrar">
+      <th class="centrar" style="width: 130px;">
         <button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add" id="btn-agregar">
           <i class='right fas fa-plus'></i>
         </button>
@@ -226,7 +226,7 @@
                   </label>
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-lg-12">
                 <div class="form-group">
                   <label class="no-mr-btm" for="motivo">Motivo</label>
                   <input type="text" name="motivo" class="form-control mayusculas" id="motivo">
