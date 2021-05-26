@@ -17,6 +17,9 @@
     <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-memorandums') ? 'active' : '' }}">
       <a href="{{ route('memorandums') }}" class="nav-link">Memorándums</a>
     </li>
+    <!-- <li class="nav-item d-none d-sm-inline-block {{ request()->is('list-registrar') ? 'active' : '' }}">
+      <a href="{{ route('registrar') }}" class="nav-link">Registrar nuevo trabajador</a>
+    </li> -->
   </ul>
 
   <ul class="navbar-nav ml-auto">

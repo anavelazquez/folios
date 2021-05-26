@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-12">
             @if (Route::has('password.request'))
                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                   
+                <!-- {{ __('Registrar nuevo usuario') }}  -->
                 </a>
             @endif
           </div>

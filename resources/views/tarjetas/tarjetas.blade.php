@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-sm-6">
             <!--------------------Modal para Tarjetas, como ayuda------------------------------------ inicio de modal-->
-            <a href="#tar" role="button"  title="¿En que momento se genera una tarjeta?" class="btn btn-large btn-secondary" data-toggle="modal"><i class="fas fa-book-open"></i></a>
+            <a href="#tar" role="button"  title="¿En que momento se genera una tarjeta?" class="btn btn-large btn-primary" data-toggle="modal"><i class="fas fa-book-open"></i></a>
   <!-- Ventana  -->
   <div id="tar" class="modal fade">
       <div class="modal-dialog">
@@ -37,7 +37,7 @@
                 </ul>
     </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
               </div>
           </div>
       </div>

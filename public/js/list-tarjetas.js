@@ -135,21 +135,21 @@ $(document).ready(function () {
         "data": function (row, type, set){
           if(row.permissions == -2){ //el super usuario que es el director general, tiene permisos de todo excepto editar  
             if(row.estado != 'cancelado'){//permitir cancelar en caso de que no esté cancelado
-            return "<button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
+            return "<button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-left: 30px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-left: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
             }else{ //En caso contrario mostrar el ojito
-              return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
+              return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-left: 45px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
             }
           }else if(row.permissions == -1){ //el usuario con permisos como los jefes de area tienen todos los permisos
             if(row.estado == 'cancelado'){//si la tarjeta ya está cancelado, mostrar solo el ojito
-              return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
+              return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-left: 45px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
             }else{
               return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button> <button type='button' class='btn btn-warning btn-sm' id='btn-cancelar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Cancelar Tarjeta'><i class='right fas fa-ban'></i></button> <button type='button' class='btn btn-danger btn-sm' id='btn-eliminar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Eliminar Tarjeta'><i class='right fas fa-trash-alt'></i></button>"
             }
           }else if(row.permissions == 0){//el usuario 0 no tiene permisos de eliminar y cancelar, 
             if(row.estado != 'cancelado'){//solo editar en caso de que no esté cancelado
-            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button>"
+            return "<button type='button' class='btn btn-primary btn-sm' id='btn-editar' style='margin-left: 45px' data-toggle='tooltip' data-placement='top' title='Editar Tarjeta'><i class='right fas fa-edit'></i></button>"
           }else{
-            return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-right: 10px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
+            return "<button type='button' class='btn btn-outline-dark btn-sm' id='btn-mostrar' style='margin-left: 45px' data-toggle='tooltip' data-placement='top' title='mostrar Tarjeta'><i class='fas fa-eye'></i></button>"
           }
         }
         else{
