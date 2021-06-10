@@ -17,9 +17,11 @@
     <li class="nav-item d-none d-sm-inline-block {{ request()->is('lista-memorandums') ? 'active' : '' }}">
       <a href="{{ route('memorandums') }}" class="nav-link">Memorándums</a>
     </li>
-    <!-- <li class="nav-item d-none d-sm-inline-block {{ request()->is('list-registrar') ? 'active' : '' }}">
-      <a href="{{ route('registrar') }}" class="nav-link">Registrar nuevo trabajador</a>
-    </li> -->
+    @if(Auth::User()->permissions == -1)
+<li class="nav-item d-none d-sm-inline-block {{ request()->is('/users/create') ? 'active' : '' }}">
+    <a href="{{ route('users.index') }}" class="nav-link">Usuarios activos</a>  
+    </li>
+@endif 
   </ul>
 
   <ul class="navbar-nav ml-auto">

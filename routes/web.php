@@ -21,6 +21,43 @@ Route::get('/', function () {
     }
 });
 
+Route::get('/users', array(
+    'as' => 'users.index',
+	'uses' => 'UserController@index'
+));
+
+
+// Route::post('/users','UserController@store')->name('store');
+Route::post('/users', array(
+    'as' => 'users.store',
+	'uses' => 'UserController@store'
+));
+
+//ruta para crear un usuario desde la vista
+Route::get('/users/create', array(
+    'as' => 'users.create',
+	'uses' => 'UserController@create'
+));
+//ruta para mostrar los usuarioss
+Route::get('/users/{user?}', array(
+    'as' => 'users.show',
+	'uses' => 'UserController@show'
+));
+//ruta para editar los usuarioss
+Route::get('/users/{user?}/edit', array(
+    'as' => 'users.edit',
+	'uses' => 'UserController@edit'
+));
+//ruta para actualizar los usuarioss
+Route::post('/users/{user?}', array(
+    'as' => 'users.update',
+	'uses' => 'UserController@update'
+));
+//ruta para eliminar los usuarioss
+Route::delete('/users/{user?}', array(
+    'as' => 'users.destroy',
+	'uses' => 'UserController@destroy'
+));
 
 //Rutas del controlador Oficios
 Route::get('/lista-oficios/{id_oficio?}', array(
